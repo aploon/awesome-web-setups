@@ -1,9 +1,9 @@
 "use client"
 import { Github, Sun, Moon } from "lucide-react"
-import { useState } from "react"
+import useDarkMode from "@/hooks/useDarkMode"
 
 export function Header() {
-    const [dark, setDark] = useState(true)
+    const { isDarkMode, toggleDarkMode } = useDarkMode()
 
     return (
         <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md">
@@ -24,13 +24,13 @@ export function Header() {
                         <button
                             aria-label="Toggle dark mode"
                             role="switch"
-                            onClick={() => setDark((d) => !d)}
+                            onClick={toggleDarkMode}
                             className="relative w-12 h-7 rounded-full bg-white/5 border border-white/10 flex items-center transition-colors duration-200"
                         >
                             <span
-                                className={`absolute left-1 top-1 w-5 h-5 rounded-full flex items-center justify-center transition-transform duration-200 bg-white/10 text-white/80 ${dark ? '' : 'translate-x-5'}`}
+                                className={`absolute left-1 top-1 w-5 h-5 rounded-full flex items-center justify-center transition-transform duration-200 bg-white/10 text-white/80 ${isDarkMode ? '' : 'translate-x-5'}`}
                             >
-                                {dark ? <Moon className="w-3.5 h-3.5" /> : <Sun className="w-3.5 h-3.5" />}
+                                {isDarkMode ? <Moon className="w-3.5 h-3.5" /> : <Sun className="w-3.5 h-3.5" />}
                             </span>
                         </button>
                         <div className="w-px h-6 bg-white/10"></div>

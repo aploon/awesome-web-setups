@@ -9,6 +9,8 @@ import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { useState, useMemo, useEffect } from "react"
 import type { Setup } from "@/lib/setup-loader"
+import MarkdownPreview from "@/components/MarkdownPreview"
+import { DarkModeProvider } from "@/context/DarkModeContext";
 
 const ITEMS_PER_PAGE = 6
 
@@ -77,7 +79,7 @@ export default function Home() {
   }
 
   return (
-    <>
+    <DarkModeProvider>
       <Header />
       <main className="flex justify-center min-h-screen bg-gradient-to-br from-[#0b0c10] via-[#1f2833] to-[#0b0c10] text-white pt-30 pb-30 px-6 md:px-24 font-sans">
         <div className="max-w-6xl space-y-12 w-full">
@@ -190,6 +192,6 @@ export default function Home() {
         </div>
       </main>
       <Footer />
-    </>
+    </DarkModeProvider>
   )
 }
