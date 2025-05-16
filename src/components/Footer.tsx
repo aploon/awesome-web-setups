@@ -48,7 +48,7 @@ export function Footer() {
                   <img
                     src={contributor.avatar}
                     alt={contributor.name}
-                    className="inline-block size-9 rounded-full ring-2 ring-white dark:ring-gray-800 hover:ring-blue-500 dark:hover:ring-blue-500 transition-all duration-200"
+                    className="inline-block size-8 rounded-full ring-2 ring-white dark:ring-gray-800 hover:ring-blue-500 dark:hover:ring-blue-500 transition-all duration-200"
                     title={contributor.name}
                   />
                 </a>
@@ -58,7 +58,7 @@ export function Footer() {
                 className="relative inline-block transition-transform hover:scale-105 hover:z-10 duration-200"
               >
                 <div 
-                  className="inline-flex size-9 rounded-full ring-2 ring-white dark:ring-gray-800 hover:ring-blue-500 dark:hover:ring-blue-500 transition-all duration-200 bg-gray-100 dark:bg-gray-800 items-center justify-center text-sm font-medium text-gray-600 dark:text-gray-300"
+                  className="inline-flex size-8 rounded-full ring-2 ring-white dark:ring-gray-800 hover:ring-blue-500 dark:hover:ring-blue-500 transition-all duration-200 bg-gray-100 dark:bg-gray-800 items-center justify-center text-sm font-medium text-gray-600 dark:text-gray-300"
                   title="View all contributors"
                 >
                   +8

@@ -41,7 +41,35 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  // Check if dark mode is stored in localStorage
+                  var theme = localStorage.getItem('theme');
+                  
+                  // If not stored, check system preference
+                  if (theme === null) {
+                    theme = true
+                  } else {
+                    theme = theme === 'dark';
+                  }
+                  
+                  // Apply dark mode immediately
+                  if (theme) {
+                    document.documentElement.classList.add('dark');
+                  }
+                } catch (e) {
+                  console.error('Theme initialization failed:', e);
+                }
+              })();
+            `,
+          }}
+        />
+      </head>
       <body>{children}</body>
     </html>
   );

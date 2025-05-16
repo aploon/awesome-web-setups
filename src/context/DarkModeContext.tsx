@@ -6,16 +6,17 @@ interface DarkModeContextProps {
 }
 
 export const DarkModeContext = createContext<DarkModeContextProps>({
-    isDarkMode: false,
+    isDarkMode: true,
     toggleDarkMode: () => {},
 });
 
 export const DarkModeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [isDarkMode, setIsDarkMode] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState(true);
 
     useEffect(() => {
-        const darkMode = localStorage.getItem('theme') === 'dark' || 
-                         (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        const storedTheme = localStorage.getItem('theme');
+        const darkMode = storedTheme === null ? true : storedTheme === 'dark';
+
         setIsDarkMode(darkMode);
         document.documentElement.classList.toggle('dark', darkMode);
     }, []);
