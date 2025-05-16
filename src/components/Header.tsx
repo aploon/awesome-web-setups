@@ -20,7 +20,7 @@ export function Header() {
                     </div>
 
                     {/* Right */}
-                    <div className="flex items-center gap-6">
+                    <div className="flex items-center gap-4">
                         <button
                             aria-label="Toggle dark mode"
                             role="switch"
@@ -33,6 +33,7 @@ export function Header() {
                                 {dark ? <Moon className="w-3.5 h-3.5" /> : <Sun className="w-3.5 h-3.5" />}
                             </span>
                         </button>
+                        <div className="w-px h-6 bg-white/10"></div>
                         <a
                             href="https://github.com/yourusername/awesome-web-setups"
                             target="_blank"

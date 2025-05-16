@@ -26,18 +26,18 @@ const contributors = [
 export function Footer() {
   return (
     <footer className="fixed bottom-0 left-0 right-0 z-50 backdrop-blur-md">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="h-16 flex items-center justify-between border-t border-white/5">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="min-h-[4rem] py-3 flex flex-col md:flex-row md:items-center justify-between border-t border-white/5 gap-3 md:gap-0">
           {/* Left */}
-          <span className="text-sm text-white/50">
+          <span className="text-sm text-white/50 text-center md:text-left">
             © {new Date().getFullYear()} awesome-web-setups
           </span>
 
           {/* Right: Contributors */}
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-white/50">Contributors:</span>
+          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4">
+            <span className="text-sm text-white/50 hidden md:inline">Contributors:</span>
             <div className="flex -space-x-2">
-              {contributors.map((contributor, i) => (
+              {contributors.slice(0, 4).map((contributor, i) => (
                 <a
                   key={i}
                   href={contributor.url}
