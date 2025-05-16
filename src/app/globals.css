@@ -125,3 +125,7 @@
 *::selection {
   background-color: #e5e7eb39;
 }
+
+.markdown-body img {
+  display: inline !important;
+}

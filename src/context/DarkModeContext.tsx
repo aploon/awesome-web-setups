@@ -14,7 +14,6 @@ export const DarkModeProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const [isDarkMode, setIsDarkMode] = useState(false);
 
     useEffect(() => {
-        console.log('DarkModeProvider');
         const darkMode = localStorage.getItem('theme') === 'dark' || 
                          (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
         setIsDarkMode(darkMode);
