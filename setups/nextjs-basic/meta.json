@@ -1,0 +1,9 @@
+{
+    "title": "Next.js Starter Setup",
+    "slug": "nextjs-basic",
+    "tags": ["nextjs", "react", "javascript", "frontend"],
+    "description": "Un setup minimaliste pour démarrer avec Next.js.",
+    "author": "johndoe",
+    "github": "https://github.com/johndoe/nextjs-basic"
+  }
+  

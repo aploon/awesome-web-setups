@@ -1,12 +1,33 @@
+'use client'
+
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { RocketIcon } from "lucide-react"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
+import { useState } from "react"
 
 const setups = [
+  {
+    title: "Next.js + Tailwind + TypeScript",
+    description: "Serverless-ready fullstack starter Serverless-ready fullstack starterServerless-ready fullstack starterServerless-ready fullstack starter",
+    tags: ["nextjs", "tailwind", "typescript"],
+    url: "https://github.com/user/project-setup"
+  },
+  {
+    title: "Vue 3 + Vite + Pinia",
+    description: "Lightweight Vue starter with state management",
+    tags: ["vue", "vite", "pinia"],
+    url: "https://github.com/user/vue-setup"
+  },
+  {
+    title: "Nuxt 3 + Supabase",
+    description: "Serverless-ready fullstack starter",
+    tags: ["nuxt", "supabase", "fullstack"],
+    url: "https://github.com/user/nuxt-supabase"
+  },
   {
     title: "Next.js + Tailwind + TypeScript",
     description: "A clean starter with Tailwind, TS, ESLint, Prettier",
@@ -24,10 +45,36 @@ const setups = [
     description: "Serverless-ready fullstack starter",
     tags: ["nuxt", "supabase", "fullstack"],
     url: "https://github.com/user/nuxt-supabase"
+  },
+  {
+    title: "TEST Nuxt 3 + Supabase",
+    description: "Serverless-ready fullstack starter Serverless-ready fullstack starterServerless-ready fullstack starterServerless-ready fullstack starter",
+    tags: ["nuxt", "supabase", "fullstack"],
+    url: "https://github.com/user/nuxt-supabase"
   }
 ]
 
+const ITEMS_PER_PAGE = 6
+
 export default function Home() {
+  const [currentPage, setCurrentPage] = useState(0)
+  const totalPages = Math.ceil(setups.length / ITEMS_PER_PAGE)
+  
+  const startIndex = currentPage * ITEMS_PER_PAGE
+  const visibleSetups = setups.slice(startIndex, startIndex + ITEMS_PER_PAGE)
+
+  const goToNextPage = () => {
+    if (currentPage < totalPages - 1) {
+      setCurrentPage(currentPage + 1)
+    }
+  }
+
+  const goToPreviousPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1)
+    }
+  }
+
   return (
     <>
       <Header />
@@ -67,36 +114,59 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {setups.map((setup, i) => (
-              <a
-                key={i}
-                href={setup.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block"
+          <div className="space-y-6">
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {visibleSetups.map((setup, i) => (
+                <a
+                  key={i}
+                  href={setup.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block h-full"
+                >
+                  <Card className="bg-gradient-to-br from-[#1b2838] to-[#0f1626] border border-[#2b3b52] rounded-2xl hover:shadow-xl hover:scale-[1.02] transition-all duration-300 cursor-pointer h-full">
+                    <CardContent className="px-6 space-y-4 flex flex-col h-full">
+                      <div className="flex items-center justify-between">
+                        <h2 className="text-xl font-semibold text-white leading-snug">
+                          {setup.title}
+                        </h2>
+                      </div>
+                      <p className="text-gray-400 text-sm line-clamp-3">
+                        {setup.description}
+                      </p>
+                      <div className="flex flex-wrap gap-2 mt-auto">
+                        {setup.tags.map((tag, j) => (
+                          <Badge key={j} className="bg-[#1e293b] text-xs text-gray-300 px-2 py-1 rounded-md">
+                            #{tag}
+                          </Badge>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </a>
+              ))}
+            </div>
+
+            <div className="flex justify-end gap-2">
+              <Button 
+                variant="outline" 
+                size="icon"
+                onClick={goToPreviousPage}
+                disabled={currentPage === 0}
+                className="bg-[#1b2838] border-[#2b3b52] hover:bg-[#2b3b52] text-white disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Card className="bg-gradient-to-br from-[#1b2838] to-[#0f1626] border border-[#2b3b52] rounded-2xl hover:shadow-xl hover:scale-[1.02] transition-all duration-300 cursor-pointer">
-                  <CardContent className="px-6 space-y-4">
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-xl font-semibold text-white leading-snug">
-                        {setup.title}
-                      </h2>
-                    </div>
-                    <p className="text-gray-400 text-sm">
-                      {setup.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {setup.tags.map((tag, j) => (
-                        <Badge key={j} className="bg-[#1e293b] text-xs text-gray-300 px-2 py-1 rounded-md">
-                          #{tag}
-                        </Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </a>
-            ))}
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <Button 
+                variant="outline" 
+                size="icon"
+                onClick={goToNextPage}
+                disabled={currentPage === totalPages - 1}
+                className="bg-[#1b2838] border-[#2b3b52] hover:bg-[#2b3b52] text-white disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </div>
       </main>

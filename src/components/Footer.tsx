@@ -25,7 +25,7 @@ const contributors = [
 
 export function Footer() {
   return (
-    <footer className="fixed bottom-0 left-0 right-0 z-50">
+    <footer className="fixed bottom-0 left-0 right-0 z-50 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-6">
         <div className="h-16 flex items-center justify-between border-t border-white/5">
           {/* Left */}
