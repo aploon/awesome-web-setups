@@ -13,6 +13,7 @@ import { SetupDetails } from "@/components/SetupDetails"
 import { DarkModeProvider } from "@/context/DarkModeContext"
 import { useRouter, usePathname } from "next/navigation"
 import { Metadata } from "@/components/Metadata"
+import { motion, AnimatePresence } from "framer-motion"
 
 const ITEMS_PER_PAGE = 6
 
@@ -231,8 +232,11 @@ export default function Home() {
 
                   <div className="flex flex-wrap justify-center gap-4">
                     {POPULAR_TAGS.map((tag, i) => (
-                      <button
+                      <motion.button
                         key={i}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: i * 0.1, duration: 0.3 }}
                         onClick={() => handleTagClick(tag.name)}
                         className={`group flex items-center gap-2 px-4 py-2 rounded-xl ${tag.color} ${tag.textColor} transition-all duration-200 hover:scale-105 ${
                           searchQuery === tag.name ? 'ring-2 ring-opacity-50 ring-current' : ''
@@ -246,7 +250,7 @@ export default function Home() {
                         <span className="font-medium capitalize">
                           {tag.name}
                         </span>
-                      </button>
+                      </motion.button>
                     ))}
                   </div>
                 </div>
@@ -267,22 +271,33 @@ export default function Home() {
                   ) : (
                     <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                       {visibleSetups.map((setup, i) => (
-                        <button
+                        <motion.div
                           key={i}
+                          layoutId={`card-${setup.slug}`}
                           onClick={() => handleSetupSelect(setup)}
-                          className="text-left w-full"
+                          className="text-left w-full cursor-pointer"
                         >
-                          <Card className="bg-white hover:bg-gray-50 dark:bg-gradient-to-br dark:from-[#1b2838] dark:to-[#0f1626] border border-gray-200 dark:border-[#2b3b52] rounded-2xl hover:shadow-xl hover:scale-[1.02] transition-all duration-300 cursor-pointer h-full">
-                            <CardContent className="px-6 space-y-4 flex flex-col h-full">
-                              <div className="flex items-center justify-between">
-                                <h2 className="text-xl font-semibold text-gray-900 dark:text-white leading-snug">
-                                  {setup.title}
-                                </h2>
-                              </div>
-                              <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3">
+                          <Card className="bg-white hover:bg-gray-50 dark:bg-gradient-to-br dark:from-[#1b2838] dark:to-[#0f1626] border border-gray-200 dark:border-[#2b3b52] rounded-2xl hover:shadow-xl hover:scale-[1.02] transition-all duration-300 h-full">
+                            <motion.div 
+                              layoutId={`content-${setup.slug}`}
+                              className="px-6 space-y-4 flex flex-col h-full"
+                            >
+                              <motion.h2 
+                                layoutId={`title-${setup.slug}`}
+                                className="text-xl font-semibold text-gray-900 dark:text-white leading-snug"
+                              >
+                                {setup.title}
+                              </motion.h2>
+                              <motion.p 
+                                layoutId={`description-${setup.slug}`}
+                                className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3"
+                              >
                                 {setup.description}
-                              </p>
-                              <div className="flex flex-wrap gap-2 mt-auto">
+                              </motion.p>
+                              <motion.div 
+                                layoutId={`tags-${setup.slug}`}
+                                className="flex flex-wrap gap-2 mt-auto"
+                              >
                                 {setup.tags.map((tag, j) => {
                                   const colors = [
                                     "bg-blue-100 text-blue-700 dark:bg-[#1e293b]",
@@ -303,10 +318,10 @@ export default function Home() {
                                     </Badge>
                                   );
                                 })}
-                              </div>
-                            </CardContent>
+                              </motion.div>
+                            </motion.div>
                           </Card>
-                        </button>
+                        </motion.div>
                       ))}
                     </div>
                   )}
