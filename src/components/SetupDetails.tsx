@@ -1,7 +1,7 @@
 import { Setup } from "@/lib/setup-loader"
-import { Button } from "./ui/button"
-import { ArrowLeft, Github } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
 import MarkdownPreview from "./MarkdownPreview"
+import { Button } from "./ui/button"
 
 interface SetupDetailsProps {
     setup: Setup
@@ -10,7 +10,7 @@ interface SetupDetailsProps {
 
 export function SetupDetails({ setup, onBack }: SetupDetailsProps) {
     return (
-        <div className="w-full animate-in fade-in duration-500">
+        <div className="max-w-[935px] mx-auto animate-in fade-in duration-500">
             {/* Header with back button and title */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0 mb-8">
                 <div className="flex items-center gap-4 w-full sm:w-auto">

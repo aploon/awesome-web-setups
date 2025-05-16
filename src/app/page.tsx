@@ -10,11 +10,15 @@ import { Footer } from "@/components/Footer"
 import { useState, useMemo, useEffect } from "react"
 import type { Setup } from "@/lib/setup-loader"
 import { SetupDetails } from "@/components/SetupDetails"
-import { DarkModeProvider } from "@/context/DarkModeContext";
+import { DarkModeProvider } from "@/context/DarkModeContext"
+import { useRouter, usePathname } from "next/navigation"
+import { Metadata } from "@/components/Metadata"
 
 const ITEMS_PER_PAGE = 6
 
 export default function Home() {
+  const router = useRouter()
+  const pathname = usePathname()
   const [currentPage, setCurrentPage] = useState(0)
   const [searchQuery, setSearchQuery] = useState("")
   const [setups, setSetups] = useState<Setup[]>([])
@@ -31,6 +35,15 @@ export default function Home() {
         }
         const data = await response.json()
         setSetups(data)
+
+        // Check if there's a setup slug in the URL
+        const setupSlug = pathname.split('/setup/')[1]
+        if (setupSlug && data.length > 0) {
+          const setup = data.find((s: Setup) => s.slug === setupSlug)
+          if (setup) {
+            setSelectedSetup(setup)
+          }
+        }
       } catch (error) {
         console.error('Error:', error)
         setError(error instanceof Error ? error.message : 'An error occurred')
@@ -40,7 +53,7 @@ export default function Home() {
     }
 
     loadSetups()
-  }, [])
+  }, [pathname])
 
   // Filter setups based on search
   const filteredSetups = useMemo(() => {
@@ -79,15 +92,30 @@ export default function Home() {
     }
   }
 
+  // Handle setup selection with URL update
+  const handleSetupSelect = (setup: Setup) => {
+    setSelectedSetup(setup)
+    // Update URL with setup slug
+    router.push(`/setup/${setup.slug}`)
+  }
+
+  // Handle back button with URL update
+  const handleBack = () => {
+    setSelectedSetup(null)
+    // Remove setup parameter from URL
+    router.push('/')
+  }
+
   return (
     <DarkModeProvider>
+      <Metadata setup={selectedSetup} />
       <Header />
       <main className="flex justify-center min-h-screen bg-gray-50 dark:bg-gradient-to-br dark:from-[#0b0c10] dark:via-[#1f2833] dark:to-[#0b0c10] text-gray-900 dark:text-white pt-30 pb-30 px-6 md:px-24 font-sans">
         <div className="max-w-6xl space-y-12 w-full">
           {selectedSetup ? (
             <SetupDetails 
               setup={selectedSetup} 
-              onBack={() => setSelectedSetup(null)} 
+              onBack={handleBack} 
             />
           ) : (
             <>
@@ -145,7 +173,7 @@ export default function Home() {
                     {visibleSetups.map((setup, i) => (
                       <button
                         key={i}
-                        onClick={() => setSelectedSetup(setup)}
+                        onClick={() => handleSetupSelect(setup)}
                         className="text-left w-full"
                       >
                         <Card className="bg-white hover:bg-gray-50 dark:bg-gradient-to-br dark:from-[#1b2838] dark:to-[#0f1626] border border-gray-200 dark:border-[#2b3b52] rounded-2xl hover:shadow-xl hover:scale-[1.02] transition-all duration-300 cursor-pointer h-full">
