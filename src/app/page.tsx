@@ -27,13 +27,13 @@ export default function Home() {
       try {
         const response = await fetch('/api/setups')
         if (!response.ok) {
-          throw new Error('Erreur lors du chargement des setups')
+          throw new Error('Error loading setups')
         }
         const data = await response.json()
         setSetups(data)
       } catch (error) {
-        console.error('Erreur:', error)
-        setError(error instanceof Error ? error.message : 'Une erreur est survenue')
+        console.error('Error:', error)
+        setError(error instanceof Error ? error.message : 'An error occurred')
       } finally {
         setIsLoading(false)
       }
@@ -42,7 +42,7 @@ export default function Home() {
     loadSetups()
   }, [])
 
-  // Filtrer les setups en fonction de la recherche
+  // Filter setups based on search
   const filteredSetups = useMemo(() => {
     if (!searchQuery.trim()) return setups
 
@@ -56,15 +56,15 @@ export default function Home() {
     })
   }, [searchQuery, setups])
 
-  // Recalculer la pagination avec les résultats filtrés
+  // Recalculate pagination with filtered results
   const totalPages = Math.ceil(filteredSetups.length / ITEMS_PER_PAGE)
   const startIndex = currentPage * ITEMS_PER_PAGE
   const visibleSetups = filteredSetups.slice(startIndex, startIndex + ITEMS_PER_PAGE)
 
-  // Reset la page courante quand la recherche change
+  // Reset current page when search changes
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value)
-    setCurrentPage(0) // Retour à la première page
+    setCurrentPage(0) // Return to first page
   }
 
   const goToNextPage = () => {
@@ -83,7 +83,7 @@ export default function Home() {
     <DarkModeProvider>
       <Header />
       <main className="flex justify-center min-h-screen bg-gray-50 dark:bg-gradient-to-br dark:from-[#0b0c10] dark:via-[#1f2833] dark:to-[#0b0c10] text-gray-900 dark:text-white pt-30 pb-30 px-6 md:px-24 font-sans">
-        <div className="max-w-6xl space-y-12 w-full pt-24">
+        <div className="max-w-6xl space-y-12 w-full">
           {selectedSetup ? (
             <SetupDetails 
               setup={selectedSetup} 
@@ -93,17 +93,17 @@ export default function Home() {
             <>
               <div className="text-center space-y-4">
                 <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-400 dark:to-blue-600 bg-clip-text text-transparent">
-                  🚀 Setup de projets web
+                  🚀 Web Project Setups
                 </h1>
                 <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-lg">
-                  Explore une collection de setups open source. Contribue en envoyant un simple README et un fichier JSON. Zéro base de données, zéro friction.
+                  Explore a collection of open source setups. Contribute by submitting a simple README and JSON file. Zero database, zero friction.
                 </p>
               </div>
 
               <div className="flex justify-center">
                 <div className="relative w-full max-w-2xl group">
                   <Input 
-                    placeholder="Rechercher un stack, un outil, un framework..." 
+                    placeholder="Search for a stack, tool, framework..." 
                     className="w-full pl-12 pr-4 !py-5 !text-xl !h-12 rounded-xl bg-white dark:bg-[#141b2b]/80 text-gray-900 dark:text-white placeholder:text-gray-400 shadow-lg backdrop-blur-sm transition-all duration-300 hover:bg-gray-50 dark:hover:bg-[#141b2b] focus:bg-white dark:focus:bg-[#141b2b] focus:ring-2 focus:ring-blue-500/50 focus:outline-none"
                     value={searchQuery}
                     onChange={handleSearch}
@@ -130,7 +130,7 @@ export default function Home() {
               <div className="space-y-6">
                 {isLoading ? (
                   <div className="text-center text-gray-400">
-                    Chargement des setups...
+                    Loading setups...
                   </div>
                 ) : error ? (
                   <div className="text-center text-red-400">
@@ -138,7 +138,7 @@ export default function Home() {
                   </div>
                 ) : filteredSetups.length === 0 ? (
                   <div className="text-center text-gray-400">
-                    Aucun résultat trouvé pour "{searchQuery}"
+                    No results found for "{searchQuery}"
                   </div>
                 ) : (
                   <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -160,7 +160,7 @@ export default function Home() {
                             </p>
                             <div className="flex flex-wrap gap-2 mt-auto">
                               {setup.tags.map((tag, j) => {
-                                // Rotation de couleurs pour les tags
+                                // Color rotation for tags
                                 const colors = [
                                   "bg-blue-100 text-blue-700 dark:bg-[#1e293b]",
                                   "bg-purple-100 text-purple-700 dark:bg-[#1e293b]",

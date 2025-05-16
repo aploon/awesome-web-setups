@@ -12,9 +12,6 @@
   <a href="https://www.npmjs.com/package/@uiw/react-md-editor" target="__blank">
     <img alt="Downloads" src="https://img.shields.io/npm/dm/@uiw/react-md-editor.svg?style=flat">
   </a>
-  <a href="https://bundlephobia.com/package/@uiw/react-md-editor" target="__blank">
-    <img alt="npm bundle size" src="https://img.shields.io/bundlephobia/minzip/@uiw/react-md-editor">
-  </a>
   <a href="https://uiwjs.github.io/react-md-editor/coverage/lcov-report" target="__blank">
     <img alt="Coverage Status" src="https://uiwjs.github.io/react-md-editor/badges.svg" />
   </a>
