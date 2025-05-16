@@ -7,58 +7,37 @@ import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
-import { useState, useMemo } from "react"
-
-const setups = [
-  {
-    title: "Next.js + Tailwind + TypeScript",
-    description: "Serverless-ready fullstack starter Serverless-ready fullstack starterServerless-ready fullstack starterServerless-ready fullstack starter",
-    tags: ["nextjs", "tailwind", "typescript"],
-    url: "https://github.com/user/project-setup"
-  },
-  {
-    title: "Vue 3 + Vite + Pinia",
-    description: "Lightweight Vue starter with state management",
-    tags: ["vue", "vite", "pinia"],
-    url: "https://github.com/user/vue-setup"
-  },
-  {
-    title: "Nuxt 3 + Supabase",
-    description: "Serverless-ready fullstack starter",
-    tags: ["nuxt", "supabase", "fullstack"],
-    url: "https://github.com/user/nuxt-supabase"
-  },
-  {
-    title: "Next.js + Tailwind + TypeScript",
-    description: "A clean starter with Tailwind, TS, ESLint, Prettier",
-    tags: ["nextjs", "tailwind", "typescript"],
-    url: "https://github.com/user/project-setup"
-  },
-  {
-    title: "Vue 3 + Vite + Pinia",
-    description: "Lightweight Vue starter with state management",
-    tags: ["vue", "vite", "pinia"],
-    url: "https://github.com/user/vue-setup"
-  },
-  {
-    title: "Nuxt 3 + Supabase",
-    description: "Serverless-ready fullstack starter",
-    tags: ["nuxt", "supabase", "fullstack"],
-    url: "https://github.com/user/nuxt-supabase"
-  },
-  {
-    title: "TEST Nuxt 3 + Supabase",
-    description: "Serverless-ready fullstack starter Serverless-ready fullstack starterServerless-ready fullstack starterServerless-ready fullstack starter",
-    tags: ["nuxt", "supabase", "fullstack"],
-    url: "https://github.com/user/nuxt-supabase"
-  }
-]
+import { useState, useMemo, useEffect } from "react"
+import type { Setup } from "@/lib/setup-loader"
 
 const ITEMS_PER_PAGE = 6
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState(0)
   const [searchQuery, setSearchQuery] = useState("")
+  const [setups, setSetups] = useState<Setup[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const loadSetups = async () => {
+      try {
+        const response = await fetch('/api/setups')
+        if (!response.ok) {
+          throw new Error('Erreur lors du chargement des setups')
+        }
+        const data = await response.json()
+        setSetups(data)
+      } catch (error) {
+        console.error('Erreur:', error)
+        setError(error instanceof Error ? error.message : 'Une erreur est survenue')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadSetups()
+  }, [])
 
   // Filtrer les setups en fonction de la recherche
   const filteredSetups = useMemo(() => {
@@ -72,7 +51,7 @@ export default function Home() {
       
       return matchTitle || matchDescription || matchTags
     })
-  }, [searchQuery])
+  }, [searchQuery, setups])
 
   // Recalculer la pagination avec les résultats filtrés
   const totalPages = Math.ceil(filteredSetups.length / ITEMS_PER_PAGE)
@@ -139,7 +118,15 @@ export default function Home() {
           </div>
 
           <div className="space-y-6">
-            {filteredSetups.length === 0 ? (
+            {isLoading ? (
+              <div className="text-center text-gray-400">
+                Chargement des setups...
+              </div>
+            ) : error ? (
+              <div className="text-center text-red-400">
+                {error}
+              </div>
+            ) : filteredSetups.length === 0 ? (
               <div className="text-center text-gray-400">
                 Aucun résultat trouvé pour "{searchQuery}"
               </div>
@@ -148,7 +135,7 @@ export default function Home() {
                 {visibleSetups.map((setup, i) => (
                   <a
                     key={i}
-                    href={setup.url}
+                    href={setup.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block h-full"
