@@ -16,6 +16,45 @@ import { Metadata } from "@/components/Metadata"
 
 const ITEMS_PER_PAGE = 6
 
+const POPULAR_TAGS = [
+  {
+    name: 'react',
+    color: 'bg-[#61DAFB]/10 hover:bg-[#61DAFB]/20',
+    textColor: 'text-[#61DAFB]',
+    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg'
+  },
+  {
+    name: 'nextjs',
+    color: 'bg-black/10 hover:bg-black/20 dark:bg-white/10 dark:hover:bg-white/20',
+    textColor: 'text-black dark:text-white',
+    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg'
+  },
+  {
+    name: 'typescript',
+    color: 'bg-[#3178C6]/10 hover:bg-[#3178C6]/20',
+    textColor: 'text-[#3178C6]',
+    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg'
+  },
+  {
+    name: 'tailwind',
+    color: 'bg-[#38B2AC]/10 hover:bg-[#38B2AC]/20',
+    textColor: 'text-[#38B2AC]',
+    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg'
+  },
+  {
+    name: 'node',
+    color: 'bg-[#339933]/10 hover:bg-[#339933]/20',
+    textColor: 'text-[#339933]',
+    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg'
+  },
+  {
+    name: 'docker',
+    color: 'bg-[#2496ED]/10 hover:bg-[#2496ED]/20',
+    textColor: 'text-[#2496ED]',
+    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg'
+  }
+]
+
 export default function Home() {
   const router = useRouter()
   const pathname = usePathname()
@@ -113,6 +152,11 @@ export default function Home() {
     router.push('/')
   }
 
+  const handleTagClick = (tag: string) => {
+    setSearchQuery(tag)
+    setCurrentPage(0)
+  }
+
   // Prevent flash during initial load when setup URL is present
   if (isInitialLoading && pathname.includes('/setup/')) {
     return (
@@ -120,7 +164,7 @@ export default function Home() {
         <div className="min-h-screen flex flex-col">
           <Header />
           <main className="flex-1 pt-16 bg-gray-50 dark:bg-gradient-to-br dark:from-[#0b0c10] dark:via-[#1f2833] dark:to-[#0b0c10] text-gray-900 dark:text-white">
-            <div className="max-w-6xl mx-auto px-6 md:px-24 py-12 space-y-12">
+            <div className="max-w-6xl mx-auto px-6 md:px-24 pt-12 pb-24 space-y-12">
               <div className="flex items-center justify-center min-h-[60vh]">
                 <div className="text-center text-gray-400">
                   Loading setup...
@@ -139,7 +183,7 @@ export default function Home() {
       <div className="min-h-screen flex flex-col">
         <Header />
         <main className="flex-1 pt-16 bg-gray-50 dark:bg-gradient-to-br dark:from-[#0b0c10] dark:via-[#1f2833] dark:to-[#0b0c10] text-gray-900 dark:text-white">
-          <div className="max-w-6xl mx-auto px-6 md:px-24 py-12 space-y-12">
+          <div className="max-w-6xl mx-auto px-6 md:px-24 pt-12 pb-24 space-y-12">
             <Metadata setup={selectedSetup} />
             {selectedSetup ? (
               <SetupDetails 
@@ -150,37 +194,60 @@ export default function Home() {
               <>
                 <div className="text-center space-y-4">
                   <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-400 dark:to-blue-600 bg-clip-text text-transparent">
-                    🚀 Web Project Setups
+                    Web Project Setups 🚀
                   </h1>
                   <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-lg">
                     Explore a collection of open source setups. Contribute by submitting a simple README and JSON file. Zero database, zero friction.
                   </p>
                 </div>
 
-                <div className="flex justify-center">
-                  <div className="relative w-full max-w-2xl group">
-                    <Input 
-                      placeholder="Search for a stack, tool, framework..." 
-                      className="w-full pl-12 pr-4 !py-5 !text-xl !h-12 rounded-xl bg-white dark:bg-[#141b2b]/80 text-gray-900 dark:text-white placeholder:text-gray-400 shadow-lg backdrop-blur-sm transition-all duration-300 hover:bg-gray-50 dark:hover:bg-[#141b2b] focus:bg-white dark:focus:bg-[#141b2b] focus:ring-2 focus:ring-blue-500/50 focus:outline-none"
-                      value={searchQuery}
-                      onChange={handleSearch}
-                    />
-                    <span className="absolute left-4 top-[15px] text-gray-400 transition-transform duration-300 group-hover:scale-110 group-focus-within:scale-110 group-focus-within:text-blue-400">
-                      <svg 
-                        className="w-5 h-5"
-                        xmlns="http://www.w3.org/2000/svg" 
-                        fill="none" 
-                        viewBox="0 0 24 24" 
-                        stroke="currentColor"
+                <div className="space-y-6">
+                  <div className="flex justify-center">
+                    <div className="relative w-full max-w-2xl group">
+                      <Input 
+                        placeholder="Search for a stack, tool, framework..." 
+                        className="w-full pl-12 pr-4 !py-5 !text-xl !h-12 rounded-xl bg-white dark:bg-[#141b2b]/80 text-gray-900 dark:text-white placeholder:text-gray-400 shadow-lg backdrop-blur-sm transition-all duration-300 hover:bg-gray-50 dark:hover:bg-[#141b2b] focus:bg-white dark:focus:bg-[#141b2b] focus:ring-2 focus:ring-blue-500/50 focus:outline-none"
+                        value={searchQuery}
+                        onChange={handleSearch}
+                      />
+                      <span className="absolute left-4 top-[15px] text-gray-400 transition-transform duration-300 group-hover:scale-110 group-focus-within:scale-110 group-focus-within:text-blue-400">
+                        <svg 
+                          className="w-5 h-5"
+                          xmlns="http://www.w3.org/2000/svg" 
+                          fill="none" 
+                          viewBox="0 0 24 24" 
+                          stroke="currentColor"
+                        >
+                          <path 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round" 
+                            strokeWidth={2} 
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" 
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap justify-center gap-4">
+                    {POPULAR_TAGS.map((tag, i) => (
+                      <button
+                        key={i}
+                        onClick={() => handleTagClick(tag.name)}
+                        className={`group flex items-center gap-2 px-4 py-2 rounded-xl ${tag.color} ${tag.textColor} transition-all duration-200 hover:scale-105 ${
+                          searchQuery === tag.name ? 'ring-2 ring-opacity-50 ring-current' : ''
+                        }`}
                       >
-                        <path 
-                          strokeLinecap="round" 
-                          strokeLinejoin="round" 
-                          strokeWidth={2} 
-                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" 
+                        <img 
+                          src={tag.logo} 
+                          alt={tag.name}
+                          className="w-5 h-5 transition-transform duration-200 group-hover:rotate-12" 
                         />
-                      </svg>
-                    </span>
+                        <span className="font-medium capitalize">
+                          {tag.name}
+                        </span>
+                      </button>
+                    ))}
                   </div>
                 </div>
 
@@ -206,7 +273,7 @@ export default function Home() {
                           className="text-left w-full"
                         >
                           <Card className="bg-white hover:bg-gray-50 dark:bg-gradient-to-br dark:from-[#1b2838] dark:to-[#0f1626] border border-gray-200 dark:border-[#2b3b52] rounded-2xl hover:shadow-xl hover:scale-[1.02] transition-all duration-300 cursor-pointer h-full">
-                            <CardContent className="px-6 space-y-4 flex flex-col h-full py-6">
+                            <CardContent className="px-6 space-y-4 flex flex-col h-full">
                               <div className="flex items-center justify-between">
                                 <h2 className="text-xl font-semibold text-gray-900 dark:text-white leading-snug">
                                   {setup.title}
