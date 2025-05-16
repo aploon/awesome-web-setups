@@ -82,7 +82,7 @@ export default function Home() {
   return (
     <DarkModeProvider>
       <Header />
-      <main className="flex justify-center min-h-screen bg-gradient-to-br from-[#0b0c10] via-[#1f2833] to-[#0b0c10] text-white pt-30 pb-30 px-6 md:px-24 font-sans">
+      <main className="flex justify-center min-h-screen bg-gray-50 dark:bg-gradient-to-br dark:from-[#0b0c10] dark:via-[#1f2833] dark:to-[#0b0c10] text-gray-900 dark:text-white pt-30 pb-30 px-6 md:px-24 font-sans">
         <div className="max-w-6xl space-y-12 w-full pt-24">
           {selectedSetup ? (
             <SetupDetails 
@@ -92,10 +92,10 @@ export default function Home() {
           ) : (
             <>
               <div className="text-center space-y-4">
-                <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
+                <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-400 dark:to-blue-600 bg-clip-text text-transparent">
                   🚀 Setup de projets web
                 </h1>
-                <p className="text-gray-300 max-w-2xl mx-auto text-lg">
+                <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-lg">
                   Explore une collection de setups open source. Contribue en envoyant un simple README et un fichier JSON. Zéro base de données, zéro friction.
                 </p>
               </div>
@@ -104,7 +104,7 @@ export default function Home() {
                 <div className="relative w-full max-w-2xl group">
                   <Input 
                     placeholder="Rechercher un stack, un outil, un framework..." 
-                    className="w-full pl-12 pr-4 !py-5 !text-xl !h-12 rounded-xl bg-[#141b2b]/80 text-white placeholder:text-gray-400 shadow-lg backdrop-blur-sm transition-all duration-300 hover:bg-[#141b2b] focus:bg-[#141b2b] focus:ring-2 focus:ring-blue-500/50 focus:outline-none"
+                    className="w-full pl-12 pr-4 !py-5 !text-xl !h-12 rounded-xl bg-white dark:bg-[#141b2b]/80 text-gray-900 dark:text-white placeholder:text-gray-400 shadow-lg backdrop-blur-sm transition-all duration-300 hover:bg-gray-50 dark:hover:bg-[#141b2b] focus:bg-white dark:focus:bg-[#141b2b] focus:ring-2 focus:ring-blue-500/50 focus:outline-none"
                     value={searchQuery}
                     onChange={handleSearch}
                   />
@@ -148,22 +148,38 @@ export default function Home() {
                         onClick={() => setSelectedSetup(setup)}
                         className="text-left w-full"
                       >
-                        <Card className="bg-gradient-to-br from-[#1b2838] to-[#0f1626] border border-[#2b3b52] rounded-2xl hover:shadow-xl hover:scale-[1.02] transition-all duration-300 cursor-pointer h-full">
+                        <Card className="bg-white hover:bg-gray-50 dark:bg-gradient-to-br dark:from-[#1b2838] dark:to-[#0f1626] border border-gray-200 dark:border-[#2b3b52] rounded-2xl hover:shadow-xl hover:scale-[1.02] transition-all duration-300 cursor-pointer h-full">
                           <CardContent className="px-6 space-y-4 flex flex-col h-full py-6">
                             <div className="flex items-center justify-between">
-                              <h2 className="text-xl font-semibold text-white leading-snug">
+                              <h2 className="text-xl font-semibold text-gray-900 dark:text-white leading-snug">
                                 {setup.title}
                               </h2>
                             </div>
-                            <p className="text-gray-400 text-sm line-clamp-3">
+                            <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3">
                               {setup.description}
                             </p>
                             <div className="flex flex-wrap gap-2 mt-auto">
-                              {setup.tags.map((tag, j) => (
-                                <Badge key={j} className="bg-[#1e293b] text-xs text-gray-300 px-2 py-1 rounded-md">
-                                  #{tag}
-                                </Badge>
-                              ))}
+                              {setup.tags.map((tag, j) => {
+                                // Rotation de couleurs pour les tags
+                                const colors = [
+                                  "bg-blue-100 text-blue-700 dark:bg-[#1e293b]",
+                                  "bg-purple-100 text-purple-700 dark:bg-[#1e293b]",
+                                  "bg-green-100 text-green-700 dark:bg-[#1e293b]",
+                                  "bg-orange-100 text-orange-700 dark:bg-[#1e293b]",
+                                  "bg-pink-100 text-pink-700 dark:bg-[#1e293b]",
+                                  "bg-indigo-100 text-indigo-700 dark:bg-[#1e293b]"
+                                ];
+                                const colorClass = colors[j % colors.length];
+                                
+                                return (
+                                  <Badge 
+                                    key={j} 
+                                    className={`${colorClass} text-xs dark:text-gray-300 px-2 py-1 rounded-md font-medium transition-colors duration-200`}
+                                  >
+                                    #{tag}
+                                  </Badge>
+                                );
+                              })}
                             </div>
                           </CardContent>
                         </Card>
@@ -179,7 +195,7 @@ export default function Home() {
                       size="icon"
                       onClick={goToPreviousPage}
                       disabled={currentPage === 0}
-                      className="bg-[#1b2838] border-[#2b3b52] hover:bg-[#2b3b52] text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="bg-white dark:bg-[#1b2838] border-gray-200 dark:border-[#2b3b52] hover:bg-gray-50 dark:hover:bg-[#2b3b52] text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <ChevronLeft className="h-4 w-4" />
                     </Button>
@@ -188,7 +204,7 @@ export default function Home() {
                       size="icon"
                       onClick={goToNextPage}
                       disabled={currentPage === totalPages - 1}
-                      className="bg-[#1b2838] border-[#2b3b52] hover:bg-[#2b3b52] text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="bg-white dark:bg-[#1b2838] border-gray-200 dark:border-[#2b3b52] hover:bg-gray-50 dark:hover:bg-[#2b3b52] text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <ChevronRight className="h-4 w-4" />
                     </Button>

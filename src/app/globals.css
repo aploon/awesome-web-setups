@@ -123,7 +123,13 @@
 
 /* custom css */
 *::selection {
-  background-color: #e5e7eb39;
+  @apply bg-blue-500/20 dark:bg-blue-400/30;
+  color: inherit;
+}
+
+*::-moz-selection {
+  @apply bg-blue-500/20 dark:bg-blue-400/30;
+  color: inherit;
 }
 
 .markdown-body img {
