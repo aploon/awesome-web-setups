@@ -2,6 +2,7 @@ import { Setup } from "@/lib/setup-loader"
 import { ArrowLeft } from "lucide-react"
 import MarkdownPreview from "./MarkdownPreview"
 import { Button } from "./ui/button"
+import { Badge } from "./ui/badge"
 
 interface SetupDetailsProps {
     setup: Setup
@@ -39,14 +40,26 @@ export function SetupDetails({ setup, onBack }: SetupDetailsProps) {
             <div className="mb-8">
                 <p className="text-lg text-gray-600 dark:text-white/70 mb-4">{setup.description}</p>
                 <div className="flex flex-wrap gap-2">
-                    {setup.tags.map((tag, i) => (
-                        <span
-                            key={i}
-                            className="px-3 py-1 text-sm text-gray-600 dark:text-white/70 bg-gray-100 dark:bg-white/5 rounded-full"
+                    {setup.tags.map((tag, j) => {
+                        const colors = [
+                        "bg-blue-100 text-blue-700 dark:bg-[#1e293b]",
+                        "bg-purple-100 text-purple-700 dark:bg-[#1e293b]",
+                        "bg-green-100 text-green-700 dark:bg-[#1e293b]",
+                        "bg-orange-100 text-orange-700 dark:bg-[#1e293b]",
+                        "bg-pink-100 text-pink-700 dark:bg-[#1e293b]",
+                        "bg-indigo-100 text-indigo-700 dark:bg-[#1e293b]"
+                        ];
+                        const colorClass = colors[j % colors.length];
+                        
+                        return (
+                        <Badge 
+                            key={j} 
+                            className={`${colorClass} text-xs dark:text-gray-300 px-2 py-1 rounded-md font-medium transition-colors duration-200`}
                         >
                             #{tag}
-                        </span>
-                    ))}
+                        </Badge>
+                        );
+                    })}
                 </div>
             </div>
 
