@@ -17,6 +17,9 @@ export async function getSetups(): Promise<Setup[]> {
   try {
     const setupFolders = fs.readdirSync(setupsDirectory)
 
+    const metaPath = path.join(setupsDirectory, 'astro-tailwind', 'meta.json')
+    const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'))
+
     const setups = setupFolders
       .filter(async folder => {
         const metaPath = path.join(setupsDirectory, folder, 'meta.json')
@@ -41,7 +44,7 @@ export async function getSetups(): Promise<Setup[]> {
 
           return {
             title: meta.title,
-            slug: metaPath,
+            slug: meta.slug,
             tags: meta.tags,
             description: meta.description,
             author: meta.author,
@@ -59,7 +62,7 @@ export async function getSetups(): Promise<Setup[]> {
     console.log(datas)
 
     return datas.map(setup => ({
-      title: setup?.title ?? 'Aucun titre trouvé',
+      title: meta.title,
       slug: setup?.slug ?? 'Aucun slug trouvé',
       tags: setup?.tags ?? ['Aucune tag trouvée'],
       description: setup?.description ?? 'Aucune description trouvée',
