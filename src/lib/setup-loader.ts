@@ -46,13 +46,15 @@ export async function getSetups(): Promise<Setup[]> {
     //   ]
     // }
 
+    let folders: any[] = [];
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const setups = setupFolders
       .filter(folder => {
+        folders.push(folder)
         console.log('folder', folder)
-        console.log('folder', folder === 'laravel-inertia')
-        const metaPath = path.join(setupsDirectory, 'laravel-inertia', 'meta.json')
-        const readmePath = path.join(setupsDirectory, 'laravel-inertia', 'README.md')
+        console.log('folder', folder === 'nextjs-shadcn')
+        const metaPath = path.join(setupsDirectory, 'nextjs-shadcn', 'meta.json')
+        const readmePath = path.join(setupsDirectory, 'nextjs-shadcn', 'README.md')
 
         if (fs.existsSync(metaPath) && fs.existsSync(readmePath)){
           return true
@@ -74,7 +76,7 @@ export async function getSetups(): Promise<Setup[]> {
           return {
             title: 'test',
             slug: 'test',
-            tags: ['test'],
+            tags: folders,
             description: 'test',
             author: 'test',
             github: 'test',
