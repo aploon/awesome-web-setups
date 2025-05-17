@@ -4,7 +4,7 @@ import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import rehypeSanitize from 'rehype-sanitize';
 import rehypeStringify from 'rehype-stringify';
-
+import remarkGfm from 'remark-gfm';
 import hljs from 'highlight.js';
 import 'github-markdown-css';
 import useDarkMode from '@/hooks/useDarkMode';
@@ -50,6 +50,7 @@ const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ markdown }) => {
         const processMarkdown = async () => {
             const file = await unified()
                 .use(remarkParse) // Convert Markdown to Markdown AST
+                .use(remarkGfm)   // Add this line for GFM support (tables, etc.)
                 .use(remarkRehype, { allowDangerousHtml: true }) // Transform Markdown AST to HTML AST
                 .use(rehypeRaw) // Preserve raw HTML in Markdown
                 .use(rehypeSanitize) // Sanitize the HTML
@@ -58,7 +59,7 @@ const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ markdown }) => {
 
             const htmlString = file.toString();
 
-            // Appliquer la coloration syntaxique
+            // Apply syntax highlighting
             const container = document.createElement('div');
             container.innerHTML = htmlString;
             container.querySelectorAll('pre code').forEach((block) => {
