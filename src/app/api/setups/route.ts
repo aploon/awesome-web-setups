@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 
 export async function GET() {
   try {
-    const setups = await getSetups()
+    const setups = getSetups()
     return NextResponse.json(setups)
   } catch (error) {
     console.error('Erreur lors du chargement des setups:', error)
