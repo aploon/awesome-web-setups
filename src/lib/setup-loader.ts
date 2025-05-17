@@ -26,6 +26,8 @@ export async function getSetups(): Promise<Setup[]> {
       const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'))
       const readme = fs.readFileSync(readmePath, 'utf8')
 
+      console.log(readme)
+
       setups.push({
         title: meta.title,
         slug: meta.slug,
