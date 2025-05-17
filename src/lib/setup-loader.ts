@@ -11,7 +11,7 @@ export interface Setup {
   readme: string
 }
 
-export function getSetups(): Setup[] {
+export async function getSetups(): Promise<Setup[]> {
   const setupsDirectory = path.join(process.cwd(), 'public', 'setups')
 
   try {
@@ -24,7 +24,7 @@ export function getSetups(): Setup[] {
       const readmePath = path.join(setupsDirectory, folder, 'README.md')
 
       const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'))
-      const readme = fs.readFileSync(readmePath, 'utf8').trim()
+      const readme = fs.readFileSync(readmePath, 'utf8')
 
       setups.push({
         title: meta.title,
