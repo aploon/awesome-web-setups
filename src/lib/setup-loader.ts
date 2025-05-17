@@ -22,8 +22,9 @@ export function getSetups(): Setup[] {
     for(const folder of setupFolders){
       const metaPath = path.join(setupsDirectory, folder, 'meta.json')
       const readmePath = path.join(setupsDirectory, folder, 'README.md')
+
       const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'))
-      const readme = fs.readFileSync(readmePath, 'utf8')
+      const readme = fs.readFileSync(readmePath, 'utf8').trim()
 
       setups.push({
         title: meta.title,
