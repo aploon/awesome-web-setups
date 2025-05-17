@@ -49,6 +49,7 @@ export async function getSetups(): Promise<Setup[]> {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const setups = setupFolders
       .filter(folder => {
+        console.log('folder', folder)
         const metaPath = path.join(setupsDirectory, 'astro-tailwind', 'meta.json')
         const readmePath = path.join(setupsDirectory, 'astro-tailwind', 'README.md')
 
