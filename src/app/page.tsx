@@ -198,7 +198,8 @@ export default function Home() {
                     Web Project Setups 🚀
                   </h1>
                   <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-lg">
-                    Explore a collection of open source setups. Contribute by submitting a simple README and JSON file. Zero database, zero friction.
+                  Discover web project setups from developers around the world.
+                  Simple, fast, and built for devs who just want to build.
                   </p>
                 </div>
 

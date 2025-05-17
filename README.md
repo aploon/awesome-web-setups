@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Awesome Web Setups
 
-## Getting Started
+A collection of modern web development setups with live preview and documentation.
 
-First, run the development server:
+## Overview
+
+This project provides a web interface to explore and preview different web development setups. Each setup includes detailed documentation, installation instructions, and best practices.
+
+## Features
+
+- 🔍 Search and filter setups by technology
+- 📱 Responsive design with dark mode support
+- 📖 Live Markdown preview with syntax highlighting
+- 🏷️ Technology tags with visual indicators
+- ⚡ Fast and modern UI with Next.js 14
+
+## Available Setups
+
+### Next.js + shadcn/ui
+Modern Next.js setup with shadcn/ui components and TailwindCSS.
+
+### Laravel + Inertia.js
+Full-stack setup with Laravel, Inertia.js, and Vue 3.
+
+### Astro + Tailwind
+Static site setup with Astro and TailwindCSS.
+
+## Quick Start
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# Install dependencies
+pnpm install
+
+# Start development server
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Adding a New Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Create a new directory in `setups/`
+2. Add two files:
+   ```
+   meta.json
+   ```
+   ```json
+   {
+     "title": "Setup Name",
+     "description": "Brief description",
+     "author": "your-name",
+     "github": "https://github.com/aploon",
+     "tags": ["tech1", "tech2"],
+     "slug": "setup-name"
+   }
+   ```
+   ```
+   README.md
+   ```
+   ```markdown
+   # Setup Name
+   
+   Description and documentation...
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Tech Stack
 
-## Learn More
+- Next.js 14
+- TailwindCSS
+- shadcn/ui
+- TypeScript
+- Markdown processing
 
-To learn more about Next.js, take a look at the following resources:
+## Contributors
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<a href="https://github.com/aploon" title="Arnaud ADJOVI">
+    <img src="https://avatars.githubusercontent.com/u/69767160?v=4" width="42;" alt="Arnaud ADJOVI"/>
+</a>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Made with [contributors](https://github.com/aploon/github-action-contributors).
 
-## Deploy on Vercel
+### License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Licensed under the MIT License.
