@@ -1,0 +1,8 @@
+{
+  "title": "Remix + Chakra UI Starter",
+  "description": "Modern Remix setup with Chakra UI for building accessible and beautiful web applications",
+  "author": "aploon",
+  "github": "https://github.com/aploon",
+  "tags": ["remix", "chakra-ui", "react", "typescript"],
+  "slug": "remix-chakra"
+} 

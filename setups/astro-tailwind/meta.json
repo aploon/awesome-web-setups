@@ -1,0 +1,8 @@
+{
+  "title": "Astro + Tailwind Starter",
+  "description": "Lightning-fast static site builder with Astro 4.0, TailwindCSS, and built-in Markdown support",
+  "author": "aploon",
+  "github": "https://github.com/aploon",
+  "tags": ["astro", "tailwind", "markdown", "static-site"],
+  "slug": "astro-tailwind"
+} 

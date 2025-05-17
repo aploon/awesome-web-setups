@@ -1,0 +1,8 @@
+{
+  "title": "Laravel + Inertia.js Starter",
+  "description": "A modern Laravel starter template with Inertia.js, Vue 3, and TailwindCSS for building full-stack applications",
+  "author": "aploon",
+  "github": "https://github.com/aploon",
+  "tags": ["laravel", "inertia", "vue", "tailwind"],
+  "slug": "laravel-inertia"
+} 
