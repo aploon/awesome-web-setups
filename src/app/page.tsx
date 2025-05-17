@@ -232,13 +232,13 @@ export default function Home() {
 
                   <div className="flex flex-wrap justify-center gap-4">
                     {POPULAR_TAGS.map((tag, i) => (
-                      <motion.button
+                      <motion.div
                         key={i}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.1, duration: 0.3 }}
                         onClick={() => handleTagClick(tag.name)}
-                        className={`group flex items-center gap-2 px-4 py-2 rounded-xl ${tag.color} ${tag.textColor} transition-all duration-200 hover:scale-105 ${
+                        className={`group flex items-center gap-2 px-4 py-2 rounded-xl ${tag.color} ${tag.textColor} transition-all duration-200 hover:scale-105 cursor-pointer ${
                           searchQuery === tag.name ? 'ring-2 ring-opacity-50 ring-current' : ''
                         }`}
                       >
@@ -250,7 +250,7 @@ export default function Home() {
                         <span className="font-medium capitalize">
                           {tag.name}
                         </span>
-                      </motion.button>
+                      </motion.div>
                     ))}
                   </div>
                 </div>
@@ -269,61 +269,70 @@ export default function Home() {
                       No results found for "{searchQuery}"
                     </div>
                   ) : (
-                    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                      {visibleSetups.map((setup, i) => (
-                        <motion.div
-                          key={i}
-                          layoutId={`card-${setup.slug}`}
-                          onClick={() => handleSetupSelect(setup)}
-                          className="text-left w-full cursor-pointer"
-                        >
-                          <Card className="bg-white hover:bg-gray-50 dark:bg-gradient-to-br dark:from-[#1b2838] dark:to-[#0f1626] border border-gray-200 dark:border-[#2b3b52] rounded-2xl hover:shadow-xl hover:scale-[1.02] transition-all duration-300 h-full">
-                            <motion.div 
-                              layoutId={`content-${setup.slug}`}
-                              className="px-6 space-y-4 flex flex-col h-full"
-                            >
-                              <motion.h2 
-                                layoutId={`title-${setup.slug}`}
-                                className="text-xl font-semibold text-gray-900 dark:text-white leading-snug"
-                              >
-                                {setup.title}
-                              </motion.h2>
-                              <motion.p 
-                                layoutId={`description-${setup.slug}`}
-                                className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3"
-                              >
-                                {setup.description}
-                              </motion.p>
+                    <motion.div 
+                      layout
+                      className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
+                    >
+                      <AnimatePresence mode="popLayout">
+                        {visibleSetups.map((setup, i) => (
+                          <motion.div
+                            key={setup.slug}
+                            layoutId={`card-${setup.slug}`}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 20 }}
+                            onClick={() => handleSetupSelect(setup)}
+                            className="text-left w-full cursor-pointer"
+                            layout
+                          >
+                            <Card className="bg-white hover:bg-gray-50 dark:bg-gradient-to-br dark:from-[#1b2838] dark:to-[#0f1626] border border-gray-200 dark:border-[#2b3b52] rounded-2xl hover:shadow-xl hover:scale-[1.02] transition-all duration-300 h-full">
                               <motion.div 
-                                layoutId={`tags-${setup.slug}`}
-                                className="flex flex-wrap gap-2 mt-auto"
+                                layoutId={`content-${setup.slug}`}
+                                className="px-6 space-y-4 flex flex-col h-full"
                               >
-                                {setup.tags.map((tag, j) => {
-                                  const colors = [
-                                    "bg-blue-100 text-blue-700 dark:bg-[#1e293b]",
-                                    "bg-purple-100 text-purple-700 dark:bg-[#1e293b]",
-                                    "bg-green-100 text-green-700 dark:bg-[#1e293b]",
-                                    "bg-orange-100 text-orange-700 dark:bg-[#1e293b]",
-                                    "bg-pink-100 text-pink-700 dark:bg-[#1e293b]",
-                                    "bg-indigo-100 text-indigo-700 dark:bg-[#1e293b]"
-                                  ];
-                                  const colorClass = colors[j % colors.length];
-                                  
-                                  return (
-                                    <Badge 
-                                      key={j} 
-                                      className={`${colorClass} text-xs dark:text-gray-300 px-2 py-1 rounded-md font-medium transition-colors duration-200`}
-                                    >
-                                      #{tag}
-                                    </Badge>
-                                  );
-                                })}
+                                <motion.h2 
+                                  layoutId={`title-${setup.slug}`}
+                                  className="text-xl font-semibold text-gray-900 dark:text-white leading-snug line-clamp-2"
+                                >
+                                  {setup.title}
+                                </motion.h2>
+                                <motion.p 
+                                  layoutId={`description-${setup.slug}`}
+                                  className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3"
+                                >
+                                  {setup.description}
+                                </motion.p>
+                                <motion.div 
+                                  layoutId={`tags-${setup.slug}`}
+                                  className="flex flex-wrap gap-2 mt-auto"
+                                >
+                                  {setup.tags.map((tag, j) => {
+                                    const colors = [
+                                      "bg-blue-100 text-blue-700 dark:bg-[#1e293b]",
+                                      "bg-purple-100 text-purple-700 dark:bg-[#1e293b]",
+                                      "bg-green-100 text-green-700 dark:bg-[#1e293b]",
+                                      "bg-orange-100 text-orange-700 dark:bg-[#1e293b]",
+                                      "bg-pink-100 text-pink-700 dark:bg-[#1e293b]",
+                                      "bg-indigo-100 text-indigo-700 dark:bg-[#1e293b]"
+                                    ];
+                                    const colorClass = colors[j % colors.length];
+                                    
+                                    return (
+                                      <Badge 
+                                        key={j} 
+                                        className={`${colorClass} text-xs dark:text-gray-300 px-2 py-1 rounded-md font-medium transition-colors duration-200`}
+                                      >
+                                        #{tag}
+                                      </Badge>
+                                    );
+                                  })}
+                                </motion.div>
                               </motion.div>
-                            </motion.div>
-                          </Card>
-                        </motion.div>
-                      ))}
-                    </div>
+                            </Card>
+                          </motion.div>
+                        ))}
+                      </AnimatePresence>
+                    </motion.div>
                   )}
 
                   {filteredSetups.length > ITEMS_PER_PAGE && (

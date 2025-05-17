@@ -1,8 +1,0 @@
-{
-  "title": "Laravel Inertia Setup",
-  "slug": "laravel-inertia",
-  "tags": ["laravel", "inertia", "vue", "php"],
-  "description": "A modern full-stack setup using Laravel, Inertia.js, and Vue.js",
-  "author": "johndoe",
-  "github": "https://github.com/johndoe/laravel-inertia-setup"
-}

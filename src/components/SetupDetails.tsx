@@ -23,7 +23,7 @@ export function SetupDetails({ setup, onBack }: SetupDetailsProps) {
             {/* Header with back button and title */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0 mb-8">
                 <div className="flex items-center gap-4 w-full sm:w-auto">
-                    <motion.button
+                    <motion.div
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.2 }}
@@ -36,7 +36,7 @@ export function SetupDetails({ setup, onBack }: SetupDetailsProps) {
                         >
                             <ArrowLeft className="w-5 h-5" />
                         </Button>
-                    </motion.button>
+                    </motion.div>
                     <motion.h1 
                         layoutId={`title-${setup.slug}`}
                         className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white truncate"
