@@ -1,6 +1,6 @@
 # Awesome Web Setups
 
-A collection of modern web development setups with live preview and documentation.
+Discover web project setups from developers around the world. Simple, fast, and built for devs who just want to build.
 
 ## Overview
 
@@ -11,31 +11,20 @@ This project provides a web interface to explore and preview different web devel
 - 🔍 Search and filter setups by technology
 - 📱 Responsive design with dark mode support
 - 📖 Live Markdown preview with syntax highlighting
-- 🏷️ Technology tags with visual indicators
-- ⚡ Fast and modern UI with Next.js 14
-
-## Available Setups
-
-### Next.js + shadcn/ui
-Modern Next.js setup with shadcn/ui components and TailwindCSS.
-
-### Laravel + Inertia.js
-Full-stack setup with Laravel, Inertia.js, and Vue 3.
-
-### Astro + Tailwind
-Static site setup with Astro and TailwindCSS.
 
 ## Quick Start
 
 ```bash
 # Install dependencies
+npm install
 pnpm install
 
 # Start development server
+npm run dev
 pnpm dev
 ```
 
-## Adding a New Setup
+## Contributing by `pulling a request`
 
 1. Create a new directory in `setups/`
 2. Add two files:
@@ -58,7 +47,7 @@ pnpm dev
    ```markdown
    # Setup Name
    
-   Description and documentation...
+   Description and installation instructions...
    ```
 
 ## Tech Stack
