@@ -86,6 +86,8 @@ export async function getSetups(): Promise<Setup[]> {
 
     const datas = await Promise.all(setups)
 
+    console.log(datas)
+
     return datas.map(setup => ({
       title: setup?.title ?? 'Aucun titre trouvé',
       slug: setup?.slug ?? 'Aucun slug trouvé',
