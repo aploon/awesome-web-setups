@@ -17,6 +17,35 @@ export async function getSetups(): Promise<Setup[]> {
   try {
     const setupFolders = fs.readdirSync(setupsDirectory)
 
+    const metaPath = path.join(setupsDirectory, 'astro-tailwind', 'meta.json')
+    const readmePath = path.join(setupsDirectory, 'astro-tailwind', 'README.md')
+
+    if (fs.existsSync(metaPath) && fs.existsSync(readmePath)){
+      return [
+        {
+          title: 'astro-tailwind',
+          slug: 'astro-tailwind',
+          tags: ['astro', 'tailwind'],
+          description: 'astro-tailwind',
+          author: 'astro-tailwind',
+          github: 'astro-tailwind',
+          readme: 'astro-tailwind'
+        }
+      ]
+    }else{
+      return [
+        {
+          title: 'Aucun setup trouvé',
+          slug: 'aucun-setup-trouve',
+          tags: ['aucun-setup-trouve'],
+          description: 'Aucun setup trouvé',
+          author: 'Aucun setup trouvé',
+          github: 'Aucun setup trouvé',
+          readme: 'Aucun setup trouvé'
+        }
+      ]
+    }
+
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const setups = setupFolders
       .filter(folder => {
