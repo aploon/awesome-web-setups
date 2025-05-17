@@ -11,7 +11,7 @@ export interface Setup {
   readme: string
 }
 
-export async function getSetups(): Promise<Setup[]> {
+export function getSetups(): Setup[] {
   const setupsDirectory = path.join(process.cwd(), 'public', 'setups')
 
   try {
@@ -21,15 +21,10 @@ export async function getSetups(): Promise<Setup[]> {
 
     for(const folder of setupFolders){
       const metaPath = path.join(setupsDirectory, folder, 'meta.json')
-      const readmePath = path.join(setupsDirectory, folder, 'README.md')
+      // const readmePath = path.join(setupsDirectory, folder, 'README.md')
 
       const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'))
-      const readme = fs.readFileSync(readmePath, 'utf8')
-
-      await new Promise(resolve => setTimeout(resolve, 2000))
-
-
-      console.log(readme)
+      // const readme = fs.readFileSync(readmePath, 'utf8')
 
       setups.push({
         title: meta.title,
@@ -38,7 +33,7 @@ export async function getSetups(): Promise<Setup[]> {
         description: meta.description,
         author: meta.author,
         github: meta.github,
-        readme: readme ?? 'Aucun readme trouvé'
+        readme: 'Aucun readme trouvé'
       })
     }
 
