@@ -33,7 +33,7 @@ export async function getSetups(): Promise<Setup[]> {
         description: meta.description,
         author: meta.author,
         github: meta.github,
-        readme: readme
+        readme: readme ?? 'Aucun readme trouvé'
       })
     }
 
