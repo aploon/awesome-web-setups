@@ -8,7 +8,7 @@ export interface Setup {
   description: string
   author: string
   github: string
-  readme?: string
+  readme: string
 }
 
 export async function getSetups(): Promise<Setup[]> {
@@ -72,11 +72,11 @@ export async function getSetups(): Promise<Setup[]> {
           return {
             title: meta.title,
             slug: meta.slug,
-            tags: ['test'],
-            description: 'test',
-            author: 'test',
-            github: 'test',
-            readme: 'test'
+            tags: meta.tags,
+            description: meta.description,
+            author: meta.author,
+            github: meta.github,
+            readme: readme
           }
         } catch (error) {
           console.error(`Erreur lors du chargement du setup ${folder}:`, error)
@@ -91,11 +91,11 @@ export async function getSetups(): Promise<Setup[]> {
     return datas.map(setup => ({
       title: setup?.title ?? 'Aucun titre trouvé',
       slug: setup?.slug ?? 'Aucun slug trouvé',
-      tags: ['test'],
-      description: 'test',
-      author: 'test',
-      github: 'test',
-      readme: 'test'
+      tags: setup?.tags ?? ['Aucune tag trouvée'],
+      description: setup?.description ?? 'Aucune description trouvée',
+      author: setup?.author ?? 'Aucun auteur trouvé',
+      github: setup?.github ?? 'Aucun github trouvé',
+      readme: setup?.readme ?? 'Aucun readme trouvé'
     }))
   } catch (error) {
     console.error('Erreur lors du chargement des setups:', error)
