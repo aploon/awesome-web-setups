@@ -60,7 +60,18 @@ export async function getSetups(): Promise<Setup[]> {
         description: 'test',
         author: 'test',
         github: 'test',
-        readme: 'test'
+        readme: '# Next.js + shadcn/ui Starter\n' +
+                '\n' +
+                'A clean and minimal Next.js 14 starter template with shadcn/ui components and TailwindCSS.\n' +
+                '\n' +
+                '## Features\n' +
+                '\n' +
+                '- ⚡ Next.js 14 with App Router\n' +
+                '- 🎨 shadcn/ui components\n' +
+                '- 🎯 TypeScript\n' +
+                '- 🎨 TailwindCSS\n' +
+                '- 📱 Responsive design\n'
+
       }
     ]
   } catch (error) {
