@@ -50,7 +50,17 @@ export async function getSetups(): Promise<Setup[]> {
 
     console.log('setups', setups)
 
-    return setups
+    return [
+      {
+        title: 'test',
+        slug: 'test',
+        tags: ['test'],
+        description: 'test',
+        author: 'test',
+        github: 'test',
+        readme: 'test'
+      }
+    ]
   } catch (error) {
     console.error('Erreur lors du chargement des setups:', error)
     return []
