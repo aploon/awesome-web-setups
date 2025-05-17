@@ -41,7 +41,7 @@ export async function getSetups(): Promise<Setup[]> {
 
           return {
             title: meta.title,
-            slug: meta.slug,
+            slug: metaPath,
             tags: meta.tags,
             description: meta.description,
             author: meta.author,
