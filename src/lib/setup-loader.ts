@@ -17,8 +17,6 @@ export async function getSetups(): Promise<Setup[]> {
   try {
     const setupFolders = fs.readdirSync(setupsDirectory)
 
-    console.log('setupFolders', setupFolders)
-
     const setups = setupFolders
       .filter(folder => {
         const metaPath = path.join(setupsDirectory, folder, 'meta.json')
@@ -29,17 +27,17 @@ export async function getSetups(): Promise<Setup[]> {
       .map(folder => {
         try {
           const metaPath = path.join(setupsDirectory, folder, 'meta.json')
-          const readmePath = path.join(setupsDirectory, folder, 'README.md')
+          // const readmePath = path.join(setupsDirectory, folder, 'README.md')
 
           // Lire meta.json
           const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'))
 
           // Lire README.md si présent
-          const readme = fs.readFileSync(readmePath, 'utf8')
+          // const readme = fs.readFileSync(readmePath, 'utf8')
 
           return {
             ...meta,
-            readme
+            readme: 'test'
           }
         } catch (error) {
           console.error(`Erreur lors du chargement du setup ${folder}:`, error)
@@ -48,19 +46,7 @@ export async function getSetups(): Promise<Setup[]> {
       })
       .filter((setup): setup is Setup => setup !== null)
 
-    console.log('setups', setups)
-
-    return [
-      {
-        title: 'test',
-        slug: 'test',
-        tags: ['test'],
-        description: 'test',
-        author: 'test',
-        github: 'test',
-        readme: 'test'
-      }
-    ]
+    return setups
   } catch (error) {
     console.error('Erreur lors du chargement des setups:', error)
     return []
