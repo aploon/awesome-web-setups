@@ -20,7 +20,7 @@ export function getSetups(): Setup[] {
 
     for (const folder of folders) {
       const metaPath = path.join(setupsDirectory, folder, 'meta.json')
-      const readmePath = path.join(setupsDirectory, folder, 'README.md')
+      const readmePath = path.join(setupsDirectory, folder, 'readme.md')
 
       try {
         const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'))
