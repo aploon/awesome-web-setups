@@ -77,7 +77,7 @@ export async function getSetups(): Promise<Setup[]> {
           return {
             title: 'test',
             slug: 'test',
-            tags: folders,
+            tags: ['test'],
             description: 'test',
             author: 'test',
             github: 'test',
@@ -92,7 +92,7 @@ export async function getSetups(): Promise<Setup[]> {
     return setups.map(setup => ({
       title: 'test',
       slug: 'test',
-      tags: ['test'],
+      tags: folders,
       description: 'test',
       author: 'test',
       github: 'test',
