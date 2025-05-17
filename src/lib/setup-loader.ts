@@ -85,8 +85,8 @@ export async function getSetups(): Promise<Setup[]> {
       })
 
     return setups.map(setup => ({
-      title: 'test',
-      slug: 'test',
+      title: setup?.title ?? 'Aucun titre trouvé',
+      slug: setup?.slug ?? 'Aucun slug trouvé',
       tags: ['test'],
       description: 'test',
       author: 'test',
