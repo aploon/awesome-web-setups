@@ -23,7 +23,7 @@ export async function getSetups(): Promise<Setup[]> {
         const metaPath = path.join(setupsDirectory, folder, 'meta.json')
         const readmePath = path.join(setupsDirectory, folder, 'README.md')
 
-        return fs.existsSync(metaPath) && fs.existsSync(readmePath)
+        return true
       })
       .map(folder => {
         try {
