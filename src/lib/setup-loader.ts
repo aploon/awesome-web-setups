@@ -46,6 +46,7 @@ export async function getSetups(): Promise<Setup[]> {
     //   ]
     // }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const folders: any[] = [];
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const setups = setupFolders
