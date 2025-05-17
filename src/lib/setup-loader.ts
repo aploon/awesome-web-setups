@@ -17,59 +17,75 @@ export async function getSetups(): Promise<Setup[]> {
   try {
     const setupFolders = fs.readdirSync(setupsDirectory)
 
-    const metaPath = path.join(setupsDirectory, 'astro-tailwind', 'meta.json')
-    const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'))
+    const setups: Setup[] = []
 
-    const setups = setupFolders
-      .filter(async folder => {
-        const metaPath = path.join(setupsDirectory, folder, 'meta.json')
-        const readmePath = path.join(setupsDirectory, folder, 'README.md')
+    for(const folder of setupFolders){
+      const metaPath = path.join(setupsDirectory, folder, 'meta.json')
+      const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'))
 
-        if (fs.existsSync(metaPath) && fs.existsSync(readmePath)){
-          return true
-        }else{
-          return false
-        }
+      setups.push({
+        title: meta.title,
+        slug: meta.slug,
+        tags: meta.tags,
+        description: meta.description,
+        author: meta.author,
+        github: meta.github,
+        readme: meta.readme
       })
-      .map(async folder => {
-        try {
-          const metaPath = path.join(setupsDirectory, folder, 'meta.json')
-          const readmePath = path.join(setupsDirectory, folder, 'README.md')
+    }
 
-          // Lire meta.json
-          const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'))
+    // const setups = setupFolders
+    //   .filter(async folder => {
+    //     const metaPath = path.join(setupsDirectory, folder, 'meta.json')
+    //     const readmePath = path.join(setupsDirectory, folder, 'README.md')
 
-          // Lire README.md si présent
-          const readme = fs.readFileSync(readmePath, 'utf8')
+    //     if (fs.existsSync(metaPath) && fs.existsSync(readmePath)){
+    //       return true
+    //     }else{
+    //       return false
+    //     }
+    //   })
+    //   .map(async folder => {
+    //     try {
+    //       const metaPath = path.join(setupsDirectory, folder, 'meta.json')
+    //       const readmePath = path.join(setupsDirectory, folder, 'README.md')
 
-          return {
-            title: meta.title,
-            slug: meta.slug,
-            tags: meta.tags,
-            description: meta.description,
-            author: meta.author,
-            github: meta.github,
-            readme: readme
-          }
-        } catch (error) {
-          console.error(`Erreur lors du chargement du setup ${folder}:`, error)
-          return null
-        }
-      })
+    //       // Lire meta.json
+    //       const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'))
 
-    const datas = await Promise.all(setups)
+    //       // Lire README.md si présent
+    //       const readme = fs.readFileSync(readmePath, 'utf8')
 
-    console.log(datas)
+    //       return {
+    //         title: meta.title,
+    //         slug: meta.slug,
+    //         tags: meta.tags,
+    //         description: meta.description,
+    //         author: meta.author,
+    //         github: meta.github,
+    //         readme: readme
+    //       }
+    //     } catch (error) {
+    //       console.error(`Erreur lors du chargement du setup ${folder}:`, error)
+    //       return null
+    //     }
+    //   })
 
-    return datas.map(setup => ({
-      title: meta.title,
-      slug: setup?.slug ?? 'Aucun slug trouvé',
-      tags: setup?.tags ?? ['Aucune tag trouvée'],
-      description: setup?.description ?? 'Aucune description trouvée',
-      author: setup?.author ?? 'Aucun auteur trouvé',
-      github: setup?.github ?? 'Aucun github trouvé',
-      readme: setup?.readme ?? 'Aucun readme trouvé'
-    }))
+    // const datas = await Promise.all(setups)
+
+    // console.log(datas)
+
+    // return datas.map(setup => ({
+    //   title: meta.title,
+    //   slug: setup?.slug ?? 'Aucun slug trouvé',
+    //   tags: setup?.tags ?? ['Aucune tag trouvée'],
+    //   description: setup?.description ?? 'Aucune description trouvée',
+    //   author: setup?.author ?? 'Aucun auteur trouvé',
+    //   github: setup?.github ?? 'Aucun github trouvé',
+    //   readme: setup?.readme ?? 'Aucun readme trouvé'
+    // }))
+
+    return setups
   } catch (error) {
     console.error('Erreur lors du chargement des setups:', error)
     return []
