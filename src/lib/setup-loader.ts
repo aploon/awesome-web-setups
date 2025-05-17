@@ -50,9 +50,8 @@ export async function getSetups(): Promise<Setup[]> {
           return null
         }
       })
-      .filter((setup): setup is Setup => setup !== null)
 
-    return [1,2,3].map(setup => ({
+    return setups.map(setup => ({
       title: 'test',
       slug: 'test',
       tags: ['test'],
