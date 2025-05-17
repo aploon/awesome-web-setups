@@ -29,6 +29,18 @@ export async function getSetups(): Promise<Setup[]> {
           readme: 'Aucun setup trouvé'
         }
       ]
+    }else{
+      return [
+        {
+          title: 'données trouvées',
+          slug: 'données-trouvées',
+          tags: ['données-trouvées'],
+          description: 'Données trouvées',
+          author: 'Données trouvées',
+          github: 'Données trouvées',
+          readme: setupFolders.join(', ')
+        }
+      ]
     }
 
     /* eslint-disable @typescript-eslint/no-unused-vars */
