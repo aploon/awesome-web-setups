@@ -46,7 +46,7 @@ export async function getSetups(): Promise<Setup[]> {
     //   ]
     // }
 
-    let folders: any[] = [];
+    const folders: any[] = [];
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const setups = setupFolders
       .filter(folder => {
