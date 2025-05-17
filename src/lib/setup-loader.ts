@@ -13,42 +13,62 @@ export interface Setup {
 
 export async function getSetups(): Promise<Setup[]> {
   const setupsDirectory = path.join(process.cwd(), 'public', 'setups')
-  const setups: Setup[] = []
 
   try {
-    const folders = fs.readdirSync(setupsDirectory)
+    const setupFolders = fs.readdirSync(setupsDirectory)
 
-    for (const folder of folders) {
-      const metaPath = path.join(setupsDirectory, folder, 'meta.json')
-      const readmePath = path.join(setupsDirectory, folder, 'README.md')
+    const setups = setupFolders
+      .filter(async folder => {
+        const metaPath = path.join(setupsDirectory, folder, 'meta.json')
+        const readmePath = path.join(setupsDirectory, folder, 'README.md')
 
-      if (!fs.existsSync(metaPath) || !fs.existsSync(readmePath)) {
-        continue
-      }
+        if (fs.existsSync(metaPath) && fs.existsSync(readmePath)){
+          return true
+        }else{
+          return false
+        }
+      })
+      .map(async folder => {
+        try {
+          const metaPath = path.join(setupsDirectory, folder, 'meta.json')
+          const readmePath = path.join(setupsDirectory, folder, 'README.md')
 
-      try {
-        const metaContent = fs.readFileSync(metaPath, 'utf8')
-        const readmeContent = fs.readFileSync(readmePath, 'utf8')
-        const meta = JSON.parse(metaContent)
+          // Lire meta.json
+          const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'))
 
-        setups.push({
-          title: meta.title ?? 'Aucun titre trouvé',
-          slug: meta.slug ?? 'Aucun slug trouvé',
-          tags: meta.tags ?? ['Aucune tag trouvée'],
-          description: meta.description ?? 'Aucune description trouvée',
-          author: meta.author ?? 'Aucun auteur trouvé',
-          github: meta.github ?? 'Aucun github trouvé',
-          readme: readmeContent ?? 'Aucun readme trouvé'
-        })
-      } catch (error) {
-        console.error(`Erreur de lecture/parse dans ${folder} :`, error)
-        continue
-      }
-    }
+          // Lire README.md si présent
+          const readme = fs.readFileSync(readmePath, 'utf8')
 
-    return setups
+          return {
+            title: meta.title,
+            slug: meta.slug,
+            tags: meta.tags,
+            description: meta.description,
+            author: meta.author,
+            github: meta.github,
+            readme: readme
+          }
+        } catch (error) {
+          console.error(`Erreur lors du chargement du setup ${folder}:`, error)
+          return null
+        }
+      })
+
+    const datas = await Promise.all(setups)
+
+    console.log(datas)
+
+    return datas.map(setup => ({
+      title: setup?.title ?? 'Aucun titre trouvé',
+      slug: setup?.slug ?? 'Aucun slug trouvé',
+      tags: setup?.tags ?? ['Aucune tag trouvée'],
+      description: setup?.description ?? 'Aucune description trouvée',
+      author: setup?.author ?? 'Aucun auteur trouvé',
+      github: setup?.github ?? 'Aucun github trouvé',
+      readme: setup?.readme ?? 'Aucun readme trouvé'
+    }))
   } catch (error) {
-    console.error('Erreur lors de la lecture des setups :', error)
+    console.error('Erreur lors du chargement des setups:', error)
     return []
   }
-}
+} 
