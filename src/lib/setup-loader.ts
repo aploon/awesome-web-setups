@@ -26,19 +26,24 @@ export async function getSetups(): Promise<Setup[]> {
       })
       .map(folder => {
         try {
-          const metaPath = path.join(setupsDirectory, folder, 'meta.json')
+          // const metaPath = path.join(setupsDirectory, folder, 'meta.json')
           // const readmePath = path.join(setupsDirectory, folder, 'README.md')
 
           // Lire meta.json
-          const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'))
+          // const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'))
 
           // Lire README.md si présent
           // const readme = fs.readFileSync(readmePath, 'utf8')
 
           return {
-            ...meta,
+            title: 'test',
+            slug: 'test',
+            tags: ['test'],
+            description: 'test',
+            author: 'test',
+            github: 'test',
             readme: 'test'
-          }
+          } as Setup
         } catch (error) {
           console.error(`Erreur lors du chargement du setup ${folder}:`, error)
           return null
