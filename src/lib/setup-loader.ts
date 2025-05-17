@@ -17,6 +17,20 @@ export async function getSetups(): Promise<Setup[]> {
   try {
     const setupFolders = fs.readdirSync(setupsDirectory)
 
+    if (!setupFolders) {
+      return [
+        {
+          title: 'Aucun setup trouvé',
+          slug: 'aucun-setup-trouve',
+          tags: ['aucun-setup-trouve'],
+          description: 'Aucun setup trouvé',
+          author: 'Aucun setup trouvé',
+          github: 'Aucun setup trouvé',
+          readme: 'Aucun setup trouvé'
+        }
+      ]
+    }
+
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const setups = setupFolders
       .filter(folder => {
@@ -50,8 +64,6 @@ export async function getSetups(): Promise<Setup[]> {
           return null
         }
       })
-
-    console.log(Array.isArray(setups))
 
     return setups.map(setup => ({
       title: 'test',
