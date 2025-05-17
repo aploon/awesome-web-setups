@@ -1,8 +1,0 @@
-{
-  "title": "SvelteKit + Skeleton Starter",
-  "description": "Modern SvelteKit setup with Skeleton UI, a fully featured UI toolkit built with Tailwind",
-  "author": "aploon",
-  "github": "https://github.com/aploon",
-  "tags": ["sveltekit", "skeleton", "tailwind", "typescript"],
-  "slug": "sveltekit-skeleton"
-} 
