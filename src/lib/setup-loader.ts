@@ -17,12 +17,16 @@ export async function getSetups(): Promise<Setup[]> {
   try {
     const setupFolders = fs.readdirSync(setupsDirectory)
 
-    console.log(setupFolders)
+    console.log('setupFolders', setupFolders)
 
     const setups = setupFolders
       .filter(folder => {
         const metaPath = path.join(setupsDirectory, folder, 'meta.json')
         const readmePath = path.join(setupsDirectory, folder, 'README.md')
+
+        console.log('metaPath', metaPath)
+        console.log('readmePath', readmePath)
+
         return fs.existsSync(metaPath) && fs.existsSync(readmePath)
       })
       .map(folder => {
@@ -35,6 +39,9 @@ export async function getSetups(): Promise<Setup[]> {
 
           // Lire README.md si présent
           const readme = fs.readFileSync(readmePath, 'utf8')
+
+          console.log('meta', meta)
+          console.log('readme', readme)
 
           return {
             ...meta,
