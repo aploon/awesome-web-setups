@@ -51,7 +51,7 @@ export async function getSetups(): Promise<Setup[]> {
         }
       })
 
-    console.log(setups)
+    console.log(typeof setups)
 
     return setups.map(setup => ({
       title: 'test',
