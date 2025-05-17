@@ -47,7 +47,7 @@ export async function getSetups(): Promise<Setup[]> {
     // }
 
     /* eslint-disable @typescript-eslint/no-unused-vars */
-    let setups = setupFolders
+    const setups = setupFolders
       .filter(async folder => {
         const metaPath = path.join(setupsDirectory, folder, 'meta.json')
         const readmePath = path.join(setupsDirectory, folder, 'README.md')
