@@ -25,10 +25,10 @@ export function getSetups(): Setup[] {
       try {
         const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'))
 
-        let readme = 'README.md non trouvé'
-        if (fs.existsSync(readmePath)) {
-          readme = fs.readFileSync(readmePath, 'utf8')
-        }
+        // let readme = 'README.md non trouvé'
+        // if (fs.existsSync(readmePath)) {
+        //   readme = fs.readFileSync(readmePath, 'utf8')
+        // }
 
         setups.push({
           title: meta.title,
