@@ -26,6 +26,9 @@ export async function getSetups(): Promise<Setup[]> {
       const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'))
       const readme = fs.readFileSync(readmePath, 'utf8')
 
+      await new Promise(resolve => setTimeout(resolve, 2000))
+
+
       console.log(readme)
 
       setups.push({
