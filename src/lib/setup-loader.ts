@@ -37,7 +37,7 @@ export function getSetups(): Setup[] {
           description: meta.description,
           author: meta.author,
           github: meta.github,
-          readme: readme
+          readme: readmePath
         })
       } catch (e) {
         console.warn(`Erreur dans le dossier ${folder} :`, e)
