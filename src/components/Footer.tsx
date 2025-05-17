@@ -1,5 +1,7 @@
 "use client"
 
+import Image from 'next/image';
+
 const contributors = [
   {
     name: "Arnaud ADJOVI",
@@ -30,9 +32,11 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="relative inline-block transition-transform hover:scale-105 hover:z-10 duration-200"
                 >
-                  <img
+                  <Image
                     src={contributor.avatar}
                     alt={contributor.name}
+                    width={42}
+                    height={42}
                     className="inline-block size-8 rounded-full ring-2 ring-white dark:ring-gray-800 hover:ring-blue-500 dark:hover:ring-blue-500 transition-all duration-200"
                     title={contributor.name}
                   />

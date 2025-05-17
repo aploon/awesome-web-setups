@@ -1,6 +1,7 @@
 "use client"
 import useDarkMode from "@/hooks/useDarkMode"
 import { Moon, Sun } from "lucide-react"
+import Link from 'next/link'
 
 export function Header() {
     const { isDarkMode, toggleDarkMode } = useDarkMode()
@@ -10,9 +11,9 @@ export function Header() {
             <div className="max-w-7xl mx-auto px-6">
                 <div className="h-16 flex items-center justify-between border-b border-gray-200 dark:border-white/5">
                     {/* Left */}
-                    <a href="/" className="text-base font-medium text-gray-600 hover:text-gray-900 dark:text-white/70 dark:hover:text-white/90 transition-colors">
+                    <Link href="/" className="text-base font-medium text-gray-600 hover:text-gray-900 dark:text-white/70 dark:hover:text-white/90 transition-colors">
                     awesome-web-setups
-                    </a>
+                    </Link>
 
                     {/* Center */}
                     <div className="flex-1 flex justify-center">
@@ -24,6 +25,7 @@ export function Header() {
                         <button
                             aria-label="Toggle dark mode"
                             role="switch"
+                            aria-checked={isDarkMode}
                             onClick={toggleDarkMode}
                             className="relative w-12 h-7 rounded-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 flex items-center transition-colors duration-200"
                         >

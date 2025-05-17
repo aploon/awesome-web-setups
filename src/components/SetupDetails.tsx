@@ -4,6 +4,7 @@ import MarkdownPreview from "./MarkdownPreview"
 import { Button } from "./ui/button"
 import { Badge } from "./ui/badge"
 import { motion } from "framer-motion"
+import Image from 'next/image'
 
 interface SetupDetailsProps {
     setup: Setup
@@ -116,10 +117,12 @@ export function SetupDetails({ setup, onBack }: SetupDetailsProps) {
                 className="mt-12 pt-8 border-t border-gray-200 dark:border-white/10"
             >
                 <div className="flex items-center gap-4">
-                    <img
+                    <Image 
                         src={`https://github.com/${setup.author}.png`}
                         alt={setup.author}
-                        className="w-12 h-12 rounded-full"
+                        width={42}
+                        height={42}
+                        className="rounded-full"
                     />
                     <div>
                         <h3 className="font-medium text-gray-900 dark:text-white">Created by</h3>

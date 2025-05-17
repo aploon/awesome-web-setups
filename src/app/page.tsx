@@ -1,6 +1,6 @@
 'use client'
 
-import { Card, CardContent } from "@/components/ui/card"
+import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -14,6 +14,7 @@ import { DarkModeProvider } from "@/context/DarkModeContext"
 import { useRouter, usePathname } from "next/navigation"
 import { Metadata } from "@/components/Metadata"
 import { motion, AnimatePresence } from "framer-motion"
+import Image from 'next/image'
 
 const ITEMS_PER_PAGE = 6
 
@@ -243,9 +244,11 @@ export default function Home() {
                           searchQuery === tag.name ? 'ring-2 ring-opacity-50 ring-current' : ''
                         }`}
                       >
-                        <img 
+                        <Image 
                           src={tag.logo} 
                           alt={tag.name}
+                          width={20}
+                          height={20}
                           className="w-5 h-5 transition-transform duration-200 group-hover:rotate-12" 
                         />
                         <span className="font-medium capitalize">
@@ -267,7 +270,7 @@ export default function Home() {
                     </div>
                   ) : filteredSetups.length === 0 ? (
                     <div className="text-center text-gray-400">
-                      No results found for "{searchQuery}"
+                      No results found for &quot;{searchQuery}&quot;
                     </div>
                   ) : (
                     <motion.div 
@@ -275,7 +278,7 @@ export default function Home() {
                       className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
                     >
                       <AnimatePresence mode="popLayout">
-                        {visibleSetups.map((setup, i) => (
+                        {visibleSetups.map((setup) => (
                           <motion.div
                             key={setup.slug}
                             layoutId={`card-${setup.slug}`}

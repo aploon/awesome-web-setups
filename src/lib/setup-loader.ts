@@ -32,7 +32,7 @@ export async function getSetups(): Promise<Setup[]> {
           const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'))
 
           // Lire README.md si présent
-          let readme = fs.readFileSync(readmePath, 'utf8')
+          const readme = fs.readFileSync(readmePath, 'utf8')
 
           return {
             ...meta,
