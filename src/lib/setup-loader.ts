@@ -44,7 +44,7 @@ export async function getSetups(): Promise<Setup[]> {
             author: 'test',
             github: 'test',
             readme: 'test'
-          } as Setup
+          }
         } catch (error) {
           console.error(`Erreur lors du chargement du setup ${folder}:`, error)
           return null
