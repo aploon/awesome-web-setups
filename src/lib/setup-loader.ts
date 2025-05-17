@@ -17,37 +17,40 @@ export async function getSetups(): Promise<Setup[]> {
   try {
     const setupFolders = fs.readdirSync(setupsDirectory)
 
+    const metaPath = path.join(setupsDirectory, 'astro-tailwind', 'meta.json')
+    const readmePath = path.join(setupsDirectory, 'astro-tailwind', 'README.md')
+
+    if (!(fs.existsSync(metaPath) && fs.existsSync(readmePath))){
+      return [
+        {
+          title: 'Aucun setup trouvé',
+          slug: 'aucun-setup-trouve',
+          tags: ['aucun-setup-trouve'],
+          description: 'Aucun setup trouvé',
+          author: 'Aucun setup trouvé',
+          github: 'Aucun setup trouvé',
+          readme: 'Aucun setup trouvé'
+        }
+      ]
+    }else{
+      return [
+        {
+          title: 'données trouvées',
+          slug: 'données-trouvées',
+          tags: ['données-trouvées'],
+          description: 'Données trouvées',
+          author: 'Données trouvées',
+          github: 'Données trouvées',
+          readme: setupFolders.join(', ')
+        }
+      ]
+    }
+
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const setups = setupFolders
       .filter(folder => {
         const metaPath = path.join(setupsDirectory, folder, 'meta.json')
         const readmePath = path.join(setupsDirectory, folder, 'README.md')
-
-        if (!(fs.existsSync(metaPath) && fs.existsSync(readmePath))){
-          return [
-            {
-              title: 'Aucun setup trouvé',
-              slug: 'aucun-setup-trouve',
-              tags: ['aucun-setup-trouve'],
-              description: 'Aucun setup trouvé',
-              author: 'Aucun setup trouvé',
-              github: 'Aucun setup trouvé',
-              readme: 'Aucun setup trouvé'
-            }
-          ]
-        }else{
-          return [
-            {
-              title: 'données trouvées',
-              slug: 'données-trouvées',
-              tags: ['données-trouvées'],
-              description: 'Données trouvées',
-              author: 'Données trouvées',
-              github: 'Données trouvées',
-              readme: setupFolders.join(', ')
-            }
-          ]
-        }
 
         return fs.existsSync(metaPath) && fs.existsSync(readmePath)
       })
