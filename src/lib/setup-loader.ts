@@ -11,7 +11,7 @@ export interface Setup {
   readme: string
 }
 
-export function getSetups(): Setup[] {
+export async function getSetups(): Promise<Setup[]> {
   const setupsDirectory = path.join(process.cwd(), 'public', 'setups')
   const setups: Setup[] = []
 
@@ -27,8 +27,9 @@ export function getSetups(): Setup[] {
       }
 
       try {
-        const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'))
-        const readme = fs.readFileSync(readmePath, 'utf8')
+        const metaContent = fs.readFileSync(metaPath, 'utf8')
+        const readmeContent = fs.readFileSync(readmePath, 'utf8')
+        const meta = JSON.parse(metaContent)
 
         setups.push({
           title: meta.title ?? 'Aucun titre trouvé',
@@ -37,16 +38,17 @@ export function getSetups(): Setup[] {
           description: meta.description ?? 'Aucune description trouvée',
           author: meta.author ?? 'Aucun auteur trouvé',
           github: meta.github ?? 'Aucun github trouvé',
-          readme: readme ?? 'Aucun readme trouvé'
+          readme: readmeContent ?? 'Aucun readme trouvé'
         })
       } catch (error) {
-        console.error(`Erreur de lecture pour le dossier "${folder}" :`, error)
+        console.error(`Erreur de lecture/parse dans ${folder} :`, error)
+        continue
       }
     }
 
     return setups
   } catch (error) {
-    console.error('Erreur lors de la lecture du dossier setups :', error)
+    console.error('Erreur lors de la lecture des setups :', error)
     return []
   }
 }
