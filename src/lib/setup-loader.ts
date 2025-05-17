@@ -12,7 +12,7 @@ export interface Setup {
 }
 
 export async function getSetups(): Promise<Setup[]> {
-  const setupsDirectory = path.join(process.cwd(), 'setups')
+  const setupsDirectory = path.join(process.cwd(), 'public/setups')
 
   try {
     const setupFolders = fs.readdirSync(setupsDirectory)

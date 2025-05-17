@@ -26,7 +26,7 @@ pnpm dev
 
 ## Contributing by `pulling a request`
 
-1. Create a new directory in `setups/`
+1. Create a new directory in `public/setups/`
 2. Add two files:
    ```
    meta.json
