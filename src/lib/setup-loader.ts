@@ -47,7 +47,7 @@ export async function getSetups(): Promise<Setup[]> {
     // }
 
     /* eslint-disable @typescript-eslint/no-unused-vars */
-    const setups = setupFolders
+    let setups = setupFolders
       .filter(async folder => {
         const metaPath = path.join(setupsDirectory, folder, 'meta.json')
         const readmePath = path.join(setupsDirectory, folder, 'README.md')
@@ -58,7 +58,7 @@ export async function getSetups(): Promise<Setup[]> {
           return false
         }
       })
-      .map(folder => {
+      .map(async folder => {
         try {
           const metaPath = path.join(setupsDirectory, folder, 'meta.json')
           const readmePath = path.join(setupsDirectory, folder, 'README.md')
@@ -84,7 +84,9 @@ export async function getSetups(): Promise<Setup[]> {
         }
       })
 
-    return setups.map(setup => ({
+    const datas = await Promise.all(setups)
+
+    return datas.map(setup => ({
       title: setup?.title ?? 'Aucun titre trouvé',
       slug: setup?.slug ?? 'Aucun slug trouvé',
       tags: ['test'],
