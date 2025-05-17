@@ -2,7 +2,7 @@
   "title": "Next.js + shadcn/ui Starter",
   "description": "A clean and minimal Next.js 14 starter template with shadcn/ui components and TailwindCSS",
   "author": "aploon",
-  "github": "https://github.com/aploon",
+  "github": "https://github.com/aploon/awesome-web-setups/edit/main/setups/nextjs-shadcn/",
   "tags": ["nextjs", "shadcn", "tailwind", "typescript"],
   "slug": "nextjs-shadcn"
 } 
