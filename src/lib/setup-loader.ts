@@ -50,8 +50,9 @@ export async function getSetups(): Promise<Setup[]> {
     const setups = setupFolders
       .filter(folder => {
         console.log('folder', folder)
-        const metaPath = path.join(setupsDirectory, 'astro-tailwind', 'meta.json')
-        const readmePath = path.join(setupsDirectory, 'astro-tailwind', 'README.md')
+        console.log('folder', folder === 'laravel-inertia')
+        const metaPath = path.join(setupsDirectory, 'laravel-inertia', 'meta.json')
+        const readmePath = path.join(setupsDirectory, 'laravel-inertia', 'README.md')
 
         if (fs.existsSync(metaPath) && fs.existsSync(readmePath)){
           return true
