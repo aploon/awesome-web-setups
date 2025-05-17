@@ -12,10 +12,12 @@ export interface Setup {
 }
 
 export async function getSetups(): Promise<Setup[]> {
-  const setupsDirectory = path.join(process.cwd(), 'public', 'setups')
+  const setupsDirectory = path.join(process.cwd(), 'setups')
 
   try {
     const setupFolders = fs.readdirSync(setupsDirectory)
+
+    console.log(setupFolders)
 
     const setups = setupFolders
       .filter(folder => {
