@@ -1,4 +1,4 @@
-import fs from 'fs'
+import fs from 'fs/promises'
 import path from 'path'
 
 export interface Setup {
@@ -15,90 +15,39 @@ export async function getSetups(): Promise<Setup[]> {
   const setupsDirectory = path.join(process.cwd(), 'public', 'setups')
 
   try {
-    const setupFolders = fs.readdirSync(setupsDirectory)
+    const folders = await fs.readdir(setupsDirectory)
+    const setups: Setup[] = []
 
-    // const metaPath = path.join(setupsDirectory, 'astro-tailwind', 'meta.json')
-    // const readmePath = path.join(setupsDirectory, 'astro-tailwind', 'README.md')
+    for (const folder of folders) {
+      const metaPath = path.join(setupsDirectory, folder, 'meta.json')
+      const readmePath = path.join(setupsDirectory, folder, 'README.md')
 
-    // if (fs.existsSync(metaPath) && fs.existsSync(readmePath)){
-    //   return [
-    //     {
-    //       title: 'astro-tailwind',
-    //       slug: 'astro-tailwind',
-    //       tags: ['astro', 'tailwind'],
-    //       description: 'astro-tailwind',
-    //       author: 'astro-tailwind',
-    //       github: 'astro-tailwind',
-    //       readme: 'astro-tailwind'
-    //     }
-    //   ]
-    // }else{
-    //   return [
-    //     {
-    //       title: 'Aucun setup trouvé',
-    //       slug: 'aucun-setup-trouve',
-    //       tags: ['aucun-setup-trouve'],
-    //       description: 'Aucun setup trouvé',
-    //       author: 'Aucun setup trouvé',
-    //       github: 'Aucun setup trouvé',
-    //       readme: 'Aucun setup trouvé'
-    //     }
-    //   ]
-    // }
+      try {
+        const [metaData, readmeContent] = await Promise.all([
+          fs.readFile(metaPath, 'utf8'),
+          fs.readFile(readmePath, 'utf8')
+        ])
 
-    /* eslint-disable @typescript-eslint/no-unused-vars */
-    const setups = setupFolders
-      .filter(async folder => {
-        const metaPath = path.join(setupsDirectory, folder, 'meta.json')
-        const readmePath = path.join(setupsDirectory, folder, 'README.md')
+        const meta = JSON.parse(metaData)
 
-        if (fs.existsSync(metaPath) && fs.existsSync(readmePath)){
-          return true
-        }else{
-          return false
-        }
-      })
-      .map(async folder => {
-        try {
-          const metaPath = path.join(setupsDirectory, folder, 'meta.json')
-          const readmePath = path.join(setupsDirectory, folder, 'README.md')
+        setups.push({
+          title: meta.title ?? 'Aucun titre trouvé',
+          slug: meta.slug ?? 'Aucun slug trouvé',
+          tags: meta.tags ?? ['Aucune tag trouvée'],
+          description: meta.description ?? 'Aucune description trouvée',
+          author: meta.author ?? 'Aucun auteur trouvé',
+          github: meta.github ?? 'Aucun github trouvé',
+          readme: readmeContent ?? 'Aucun readme trouvé'
+        })
+      } catch {
+        // Ignorer les dossiers incomplets ou avec erreurs
+        continue
+      }
+    }
 
-          // Lire meta.json
-          const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'))
-
-          // Lire README.md si présent
-          const readme = fs.readFileSync(readmePath, 'utf8')
-
-          return {
-            title: meta.title,
-            slug: meta.slug,
-            tags: meta.tags,
-            description: meta.description,
-            author: meta.author,
-            github: meta.github,
-            readme: readme
-          }
-        } catch (error) {
-          console.error(`Erreur lors du chargement du setup ${folder}:`, error)
-          return null
-        }
-      })
-
-    const datas = await Promise.all(setups)
-
-    console.log(datas)
-
-    return datas.map(setup => ({
-      title: setup?.title ?? 'Aucun titre trouvé',
-      slug: setup?.slug ?? 'Aucun slug trouvé',
-      tags: setup?.tags ?? ['Aucune tag trouvée'],
-      description: setup?.description ?? 'Aucune description trouvée',
-      author: setup?.author ?? 'Aucun auteur trouvé',
-      github: setup?.github ?? 'Aucun github trouvé',
-      readme: setup?.readme ?? 'Aucun readme trouvé'
-    }))
+    return setups
   } catch (error) {
-    console.error('Erreur lors du chargement des setups:', error)
+    console.error('Erreur lors du chargement des setups :', error)
     return []
   }
-} 
+}
