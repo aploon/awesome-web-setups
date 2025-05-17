@@ -11,7 +11,7 @@ export interface Setup {
   readme?: string
 }
 
-export async function getSetups(): Promise<Setup[]> {
+export function getSetups(): Setup[] {
   const setupsDirectory = path.join(process.cwd(), 'public', 'setups')
 
   try {
@@ -46,16 +46,11 @@ export async function getSetups(): Promise<Setup[]> {
     //   ]
     // }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const folders: any[] = [];
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const setups = setupFolders
       .filter(folder => {
-        folders.push(folder)
-        console.log('folder', folder)
-        console.log('folder', folder === 'nextjs-shadcn')
-        const metaPath = path.join(setupsDirectory, 'nextjs-shadcn', 'meta.json')
-        const readmePath = path.join(setupsDirectory, 'nextjs-shadcn', 'README.md')
+        const metaPath = path.join(setupsDirectory, folder, 'meta.json')
+        const readmePath = path.join(setupsDirectory, folder, 'README.md')
 
         if (fs.existsSync(metaPath) && fs.existsSync(readmePath)){
           return true
@@ -92,7 +87,7 @@ export async function getSetups(): Promise<Setup[]> {
     return setups.map(setup => ({
       title: 'test',
       slug: 'test',
-      tags: folders,
+      tags: ['test'],
       description: 'test',
       author: 'test',
       github: 'test',
